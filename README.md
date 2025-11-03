@@ -1,2 +1,2 @@
 # LC_GUITools
-Toolkit for drawing interactive object on an Arduino display.
+Toolkit for drawing interactive objects on an Arduino display.
