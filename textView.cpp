@@ -176,7 +176,7 @@ void lineManager::setText(const char* text) {
 
 
 // Add this cstring to the end of our text.
-void lineManager::appendText(char* text) {
+void lineManager::appendText(const char* text) {
 
 	char* buff;
 	int   numNewChars;
@@ -208,7 +208,7 @@ void lineManager::appendText(char* text) {
 
 
 // Stick a NULL terminated substring IN FRONT of this index.
-void lineManager::insertText(int index, char* text) {
+void lineManager::insertText(int index, const char* text) {
 
   char*           buff;
   int             numNewChars;
@@ -559,15 +559,15 @@ void textView::setScroll(scrollCom choice,int inNum) {
     newEditLine = 0;
   } else {
     switch (choice) {
-      case topOfText      : newEditLine = 0;                                      break;
-      case endOfText      : newEditLine = numLines-mNumLines;                     break;
-      case lineAtBottom   : newEditLine = inNum-mNumLines;                        break;
-      case lineAtTop      : newEditLine = inNum;                                  break;
-      case indexAtBottom  : newEditLine = mManager.getLineNum(inNum) - mNumLines; break;
-      case indexAtTop     : newEditLine = mManager.getLineNum(inNum);             break;
-      case upOne          : newEditLine = inNum--;                                break;	// These two, possibly backwards
-      case downOne        : newEditLine = inNum++;                                break;	// Untested as yet..
-      default				  : newEditLine = inNum;											 break;  // Shut up compiler.
+      case topOfText			: newEditLine = 0;                                      break;
+      case endOfText			: newEditLine = numLines-mNumLines;                     break;
+      case lineAtBottom		: newEditLine = inNum-mNumLines;                        break;
+      case lineAtTop			: newEditLine = inNum;                                  break;
+      case indexAtBottom	: newEditLine = mManager.getLineNum(inNum) - mNumLines; break;
+      case indexAtTop		: newEditLine = mManager.getLineNum(inNum);             break;
+		case upOneLine			: newEditLine = inNum--;                                break;	// These two, possibly backwards
+      case downOneLine		: newEditLine = inNum++;                                break;	// Untested as yet..
+      default					: newEditLine = inNum;											 break;  // Shut up compiler.
     }
     if (newEditLine>=numLines) newEditLine = numLines-1;
     if (newEditLine<0) newEditLine = 0;
@@ -588,7 +588,7 @@ void textView::setText(const char* text) {
 
 
 // Add this to the end of our text.
-void textView::appendText(char* text) {
+void textView::appendText(const char* text) {
 
   mManager.appendText(text);
   setScroll(endOfText);
@@ -615,7 +615,7 @@ void textView::appendText(char inChar) {
 
 	
 // Stick a NULL terminated substring in at this index.
-void textView::insertText(int index, char* text)  {
+void textView::insertText(int index,const char* text)  {
 
   mManager.insertText(index, text);
   needRefresh = true;

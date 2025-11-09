@@ -15,7 +15,7 @@
 #include "drawObj.h"
 
 // calling the scroll function. You'll need these. Mostly it'll be automatic though.
-enum scrollCom  { topOfText, endOfText, lineAtBottom, lineAtTop, indexAtBottom, indexAtTop, upOne, downOne };
+enum scrollCom  { topOfText, endOfText, lineAtBottom, lineAtTop, indexAtBottom, indexAtTop, upOneLine, downOneLine };
 
 // lineMarker, oh boy!
 // We need to break the text into lines. When flowing text on a screen, there are rules.
@@ -57,8 +57,8 @@ class lineManager : public linkList {
 
 				void        setWidth(int widthChars);						// Set how many chars wide the lines are.
 				void        setText(const char* text);						// A possibly giant NULL terminated c string.
-				void        appendText(char* text);							// Add this to the end of our text.
-				void        insertText(int index,char* text);			// Stick a NULL terminated substring in at this index.
+				void        appendText(const char* text);					// Add this to the end of our text.
+				void        insertText(int index,const char* text);	// Stick a NULL terminated substring in at this index.
 				void        deleteText(int startIndex,int endIndex);	// Remove some text from middle, beginning? End?
 				void        indexAll(void);									// Index all the text.
 				void        indexSet(int endLineNum);						// Index a subset of lines.
@@ -91,10 +91,10 @@ class textView :  public drawObj {
           void        setTextColors(colorObj* tColor,colorObj* bColor);
           void        setScroll(scrollCom choice,int inNum=0);    // Better look at the scrolling command list.
   virtual void        setText(const char* text);                  // Replace our text buff with a copy of this.
-  virtual void        appendText(char* text);                     // Add this to the end of our text.
+  virtual void        appendText(const char* text);               // Add this to the end of our text.
   virtual void			 appendText(int inVal);								// I know, its an integer. Make it text.
   virtual void			 appendText(char inChar);
-  virtual void        insertText(int index,char* text);           // Stick a NULL terminated substring in at this index.
+  virtual void        insertText(int index,const char* text);		// Stick a NULL terminated substring in at this index.
   virtual void        deleteText(int startIndex,int numChars);    // Remove some text from middle, beginning? End?
           char*       seeText(void);
   virtual void        drawSelf(void);                             // Its draw time!

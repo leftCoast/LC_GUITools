@@ -25,7 +25,7 @@ enum {
 class label : public drawObj {
 
 	public :
-  				label();
+  				label(void);
   				label(const char* inText);
   				label(const char* inText, int inSize);
   				label(int inLocX, int inLocY, int inWidth,int inHeight);
@@ -48,12 +48,13 @@ class label : public drawObj {
 				int	getNumChars(void);		// We want to know how long the string is.. (MINUS THE '\0')
 				int	getViewChars(void);		// We want to know how many chars can we display?
 				void	getText(char* inBuff);	// We asked above how much you have. Hand it over.
+  				char*	getTextBuff(void);		// Ok, here's the text buffer's adress. We TRUST you won't mess with it!
   				int 	getTextWidth(void);		// How wide in pixels is our text?
-  				int 	getTextHeight(void);		// How tall in pixels are the charactors?
+  				int 	getTextHeight(void);		// How tall in pixels are the characters?
   
 	virtual	void drawSelf(void);
 
-//protected :
+protected :
 	void initLabel(void);
   
 	int		textSize;

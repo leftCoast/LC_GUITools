@@ -10,7 +10,7 @@
 // Or color changes or fade out. You pretty much have complete control over the line of text
 // as one line. You don't have a char by char control here. Just color over time on a string.
 // 
-// You have your standard x,y,length, height paramiters. Then you have framerateMs.
+// You have your standard x,y,length, height parameters. Then you have framerateMs.
 
 // framerateMs : sets how long between changes it waits. This is not a perfect clock. 
 // Things can effect it like the program doing something else somewhere else. But it 
@@ -24,7 +24,7 @@
 //
 // addAColor() takes a time & color. Time is an integer representing milisoncds
 // and color is a coloObj. You want your first color to start at time 0. Then you
-// add them whatever color you want at wheatever time. It will sort them out in
+// add them whatever color you want at whatever time. It will sort them out in
 // time order and blend over time from color to color.
 // 
 // For example : Show a string for 4 seconds then fade to black over 1 second.
@@ -39,7 +39,7 @@
 // release() can reset the animation to 0 frame for you if you'd like.
 //
 // NOTE : Best to use this over solid colors. Trying to animate on a .bmp
-// bakckground is a flashy mess. Too slow.
+// background is a flashy mess. Too slow.
 
 
 class liveText : public label,
@@ -56,6 +56,8 @@ class liveText : public label,
 				void		release(bool reset=true);
 
 	virtual	void		idle(void);
+	
+	protected:
 				void		setCalcColor(void);
   
 				bool		loop;

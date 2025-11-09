@@ -200,6 +200,10 @@ int label::getViewChars(void) { return width/(CHAR_WIDTH*textSize); }
 // We asked above how much you have. Hand it over!	(They better add one for the \0!)	
 void label::getText(char* inBuff) { strcpy(inBuff,buff); }
 				
+// This one's a little scary as in it returns the actual address of our text buffer. We're
+// just hoping no one monkeys with it.
+char*	label::getTextBuff(void) { return buff; }
+
 				
 int label::getTextWidth(void) { return(CHAR_WIDTH*textSize*strlen(buff)); }
 
