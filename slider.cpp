@@ -9,14 +9,14 @@
 // **************************************************************
 
 
-knobObj::knobObj(int length,int inThickness,int inRange,bool inVertical,colorObj* bkColor)
+knobObj::knobObj(int length,int inThickness,int inRange,bool inVertical)
 	: colorRect(0,0,20,20,-2) {
 	
 	range			= inRange;
 	vertical		= inVertical;
 	thickness	= inThickness;
-	prevY			= -1;
 	prevX			= -1;
+	prevY			= -1;
 	if (vertical) {
 		x			= 0;
 		y			= 0;
@@ -33,11 +33,22 @@ knobObj::knobObj(int length,int inThickness,int inRange,bool inVertical,colorObj
 		valtoPos.setValues(0,100,0,range-thickness);
 	}		
 	setColor(DEF_SLIDER_KNBCOLOR);
-	backColor.setColor(bkColor);
+	backColor.setColor(DEF_SLIDER_BCOLOR);
 }
 	
 	
 knobObj::~knobObj(void) {  }
+
+
+void knobObj::setColors(colorObj* inForeColor,colorObj* inBackColor) {
+	
+	if (inForeColor) {
+		setColor(inForeColor);
+	}
+	if (inBackColor) {
+		backColor.setColor(inBackColor);
+	}
+}
 
 
 void knobObj::eraseSelf(void) {
@@ -107,12 +118,22 @@ void knobObj::setValue(float value) {
    	range = width;
    	length = height;
    }
-   knob = new knobObj(length,DEF_SLIDER_KNOB_T,range,vertical,&backColor);
+   knob = new knobObj(length,DEF_SLIDER_KNOB_T,range,vertical);
    addObj(knob);
 }
 
 
 slider::~slider(void) { }
+
+void slider::setColors(colorObj* inForeColor,colorObj* inBackColor) {
+
+	if (inForeColor && knob) {
+		knob->setColors(inForeColor,inBackColor);
+	}
+	if (inBackColor) {
+		backColor.setColor(inBackColor);
+	}
+}
 
 
 float slider::getValue(void) { return knob->getValue(); }

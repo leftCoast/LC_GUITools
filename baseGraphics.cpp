@@ -236,6 +236,17 @@ bool rect::isSubRectOf(rect* checkRect) {
 }
 
 
+// Are we identical to this rect?
+bool rect::isSameAs(rect* checkRect) {
+
+	if (x != checkRect->x)				return false;									
+	if (y != checkRect->y)				return false;	
+	if (width != checkRect->width)	return false;	
+	if (height != checkRect->height)	return false;
+	return true;
+}	
+
+
 // Lets say you have a set of points and want a rectangle that spans them all. Here's the
 // way to do just that. Create your rect, call startBoundsRec() then pass in all the
 // points. using addBoundsPt() Either points or x,y values. When done, you will have a

@@ -67,8 +67,8 @@ class displayObj {
 	virtual	void	fillCircle(int locX,int locY,int inDiam, colorObj* inColor);
 	virtual	void	drawTriangle(point* pt0,point* pt1,point* pt2,colorObj* inColor);
 	virtual	void	fillTriangle(point* pt0,point* pt1,point* pt2,colorObj* inColor);
-	virtual	void	drawVLine(int locX,int locY,int height,colorObj* inColor);
-	virtual	void	drawHLine(int locX,int locY,int width,colorObj* inColor);
+	virtual	void	drawVLine(int locX,int locY,int height,colorObj* inColor);					// NOTE : vertical line is DOWN. Can be just drawLine(x, y, x, y+h-1, color);
+	virtual	void	drawHLine(int locX,int locY,int width,colorObj* inColor);					//        Horizontal line is RIGHT. Can be just drawLine(x, y, x+w-1, y, color);
 	virtual	void	drawLine(int locX,int locY,int locX2,int locY2,colorObj* inColor);
 	virtual	void	drawLine(point* startPt,point* endPt,colorObj* inColor);
 	virtual	void	drawPixel(int locX,int locY,colorObj* pColor);

@@ -7,7 +7,7 @@ drawObj::drawObj() {
 	needRefresh	= true;			// Well Duh! We never been drawn yet!
 	focus			= false;			// But we're hopefull.
 	clicked		= false;			// No clicking either. Least not yet.
-	mEventSet		= noEvents;	// 'Cause this is actually the default.
+	mEventSet	= noEvents;		// 'Cause this is actually the default.
 	callback		= NULL;			// And, no.. We have none of this either.
 	lastX			= 0;				// Yes, these are where we were before we moved.
 	lastY			= 0;

@@ -41,26 +41,27 @@ void colorRect::setInset(int inset) {
 
 void colorRect::drawSelf(void) {
 
-	colorObj  insetTLColor;
-	colorObj  insetBRColor;
-  
+	colorObj	insetTLColor;
+	colorObj	insetBRColor;
+	int		ii;
+
 	screen->fillRect(x, y, width, height, (colorObj*)this);
 	if (mInset) {
 		if (mInset>0) {
-    		insetTLColor = mixColors(&black,50);
+			insetTLColor = mixColors(&black,50);
     		insetBRColor = mixColors(&white,50);
     	} else {
     		insetTLColor = mixColors(&white,50);
     		insetBRColor = mixColors(&black,50);
     	}
-
-    for (int i=0;i<abs(mInset);i++) {
-      screen->drawVLine(x+i,y+i,height-2*i,&insetTLColor);
-      screen->drawHLine(x+i,y+i,width-2*i,&insetTLColor);
-      screen->drawVLine(x+(width-1)-i,y+i,height-i,&insetBRColor);	// I think it needs (width-1) in there.
-      screen->drawHLine(x+i,y+height-i,width-i,&insetBRColor);
-    }
-  }
+		for (int i=0;i<abs(mInset);i++) {
+			ii = 2*i;
+			screen->drawHLine( x+i, y+i,width-(1+ii), &insetTLColor);
+			screen->drawVLine( x+i, y+i,height-(1+ii), &insetTLColor);
+			screen->drawHLine( x+i, y+height-(1+i), width-(1+ii), &insetBRColor);
+			screen->drawVLine( x+width-(1+i), y+1+i, height-(1+ii), &insetBRColor);
+		}
+	}
 }
 
 
@@ -85,12 +86,12 @@ void colorRect::setColor(colorObj* inColor) {
 }
 
 
-void colorRect::setLocation(int inX, int inY)								{ rect::setLocation(inX,inY); setNeedRefresh(); }
-void colorRect::setSize(int inWidth,int inHeight)							{ rect::setSize(inWidth,inHeight); setNeedRefresh(); }
-void colorRect::setRect(rect* inRect)											{ rect::setRect(inRect); setNeedRefresh(); }
-void colorRect::setRect(point* inPt1,point* inPt2)							{ rect::	setRect(inPt1,inPt2); setNeedRefresh(); }			
-void colorRect::setRect(int inX, int inY, int inWidth,int inHeight)	{ rect::setRect(inX,inY,inWidth,inHeight); setNeedRefresh(); }
-void colorRect::insetRect(int inset)											{ rect::insetRect(inset); setNeedRefresh(); }
-void colorRect::addRect(rect* inRect)											{ rect::addRect(inRect); setNeedRefresh(); }
+void colorRect::setLocation(int inX, int inY)								{ drawObj::setLocation(inX,inY); setNeedRefresh(); }
+void colorRect::setSize(int inWidth,int inHeight)							{ drawObj::setSize(inWidth,inHeight); setNeedRefresh(); }
+void colorRect::setRect(rect* inRect)											{ drawObj::setRect(inRect); setNeedRefresh(); }
+void colorRect::setRect(point* inPt1,point* inPt2)							{ drawObj::setRect(inPt1,inPt2); setNeedRefresh(); }			
+void colorRect::setRect(int inX, int inY, int inWidth,int inHeight)	{ drawObj::setRect(inX,inY,inWidth,inHeight); setNeedRefresh(); }
+void colorRect::insetRect(int inset)											{ drawObj::insetRect(inset); setNeedRefresh(); }
+void colorRect::addRect(rect* inRect)											{ drawObj::addRect(inRect); setNeedRefresh(); }
 
 
