@@ -9,7 +9,7 @@
 // sanity checking before calling. Setting up the GFX object width
 // & height are actually asking, max width & max height. So you need
 // to add in the offsets as well. This seems to only be checked when
-// drawing text.
+// drawing text. **>(NOT The actual width and height.)<**
 mapDisplay::mapDisplay(bitmap* inMap,int ofsX,int ofsY)  
   : Adafruit_GFX((int16_t)inMap->getWidth()+ofsX,(int16_t)inMap->getHeight()+ofsY) {
 
@@ -22,7 +22,7 @@ mapDisplay::mapDisplay(bitmap* inMap,int ofsX,int ofsY)
 mapDisplay::~mapDisplay(void) {  }
 
 
-bool mapDisplay::dispObjBegin(void) { return true; }
+bool mapDisplay::begin(void) { return true; }
 
 
 rect mapDisplay::getTextRect(const char* inText) {
@@ -75,24 +75,27 @@ offscreen::~offscreen(void) {
 // is good, set up for drawing to it.
 void offscreen::beginDraw(bitmap* inMap,int inOffsetX,int inOffsetY) {
 
-  if (mDrawing) {                        			 					// We already drawing? Someone forgot to shut down?
-    endDraw();                            							// Shut it down.
-  }
-  if (mDisplay) {                         							// If we have a display object..
-    delete mDisplay;                      							// dump it.
-    mDisplay = NULL;                      							// Note it's gone.
-  }
-  if (inMap) {                            							// Sanity. We got a bitmap?
-    if (inMap->getHasMap()) {             							// And its RAM's been allocated?
-      mDisplay  = new mapDisplay(inMap,inOffsetX,inOffsetY);	// Create the display objecet with the bitmap.
-      if (mDisplay) {                     							// Sanity. We got that display?
-        oldScreen = screen;               							// Everything seems ok. Save off the screen pointer.
-        screen = this;                    							// Replace it with us.
-        mDrawing = true;                  							// Note that we are now rerouting drawing calls.
-      }
-    }
-  }
+	if (mDrawing) {                        			 					// We already drawing? Someone forgot to shut down?
+		endDraw();                            								// Shut it down.
+	}																					//
+	if (mDisplay) {                         								// If we have a display object..
+		delete mDisplay;                      								// dump it.
+		mDisplay = NULL;                      								// Note it's gone.
+	}																					//
+	if (inMap) {                            								// Sanity. We got a bitmap?
+		if (inMap->getHasMap()) {             								// And its RAM's been allocated?
+			mDisplay  = new mapDisplay(inMap,inOffsetX,inOffsetY);	// Create the display objecet with the bitmap.
+			if (mDisplay) {                     							// Sanity. We got that display?
+				if (mDisplay->begin()) {										// Just in case later it does something..
+					oldScreen = screen;               						// Everything seems ok. Save off the screen pointer.
+					screen = this;                    						// Replace it with us.
+					mDrawing = true;                  						// Note that we are now rerouting drawing calls.
+				}
+			}
+		}
+	}
 }
+
 
 
 // ENOUGH! We're done drawing to the bitmap.
@@ -104,14 +107,14 @@ void offscreen::endDraw(void) {
 		if (mDisplay) {		// We got a display?
 			delete mDisplay;	// dump it.
 			mDisplay = NULL;	// Note it's gone.
-		}
+		}							//
 		mDrawing = false;		// Note that we are no longer rerouting drawing calls.
 	} 
 }
 
 
 // In case someone asks.
-bool offscreen::dispObjBegin(void) { return true; }
+bool offscreen::begin(void) { return true; }
 
 // The standard pass throughs.
 void offscreen::setRotation(byte inRotation)                                                  	{ mDisplay->setRotation(inRotation); }

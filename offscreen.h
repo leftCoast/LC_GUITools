@@ -12,7 +12,7 @@ class mapDisplay :	public Adafruit_GFX {
 				mapDisplay(bitmap* inMap,int ofsX,int ofsY);
 	virtual	~mapDisplay(void);
 
-				bool  dispObjBegin(void);
+				bool  begin(void);
 	virtual	rect	getTextRect(const char* inText);
 	virtual	void  drawPixel(int16_t x, int16_t y, uint16_t color);
 
@@ -33,7 +33,7 @@ class offscreen : public displayObj {
 				offscreen(void);
 				~offscreen(void);
 
-				bool  dispObjBegin(void);
+				bool  begin(void);
 				void  beginDraw(bitmap* inMap,int inOffsetX=0,int inOffsetY=0);
 				void  endDraw(void);
 

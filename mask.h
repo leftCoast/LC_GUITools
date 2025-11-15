@@ -9,7 +9,7 @@
 // inherited and used for any masking formula you want. Just override checkPixel and have
 // at it.
 //
-// .bmpMask below is a prime example of how this can be used.
+// maskRect below is a prime example of how this can be used.
 
 
 enum masktype { unMasked, totalMasked, partialMasked };
