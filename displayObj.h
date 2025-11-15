@@ -75,6 +75,12 @@ class displayObj {
    virtual	void	blit(int locX,int locY,bitmap* inBitmap);
    
 	virtual	void	drawPixelInvert(int x,int y);
+	
+	// OLED screen saver here!
+	virtual	void	setPercBlack(float percent);
+	virtual	float	getPercBlack(void);
+	virtual	word	dim16(colorObj* inColor);
+	
 	virtual	void	frameRectInvert(int x,int y,int width,int height);
 	virtual	void	fillRectGradient(int inX,int inY,int width,int height,colorObj* startColor,colorObj* endColor,bool rising=true,bool vertical=true);
 	virtual	void	fillRectGradient(rect* inRect,colorObj* startColor,colorObj* endColor,bool rising=true,bool vertical=true);
@@ -99,6 +105,7 @@ class displayObj {
 				bool			readable;
 				bool			boundsBegin;
 				bool			boundsRecording;
+				float			percBlack;
 };
 
 

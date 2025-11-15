@@ -53,6 +53,7 @@ class liveText : public label,
                 
 				void		addAColor(int timeMs,colorObj* color);
 				void		hold(void);
+				bool		isHolding(void);
 				void		release(bool reset=true);
 
 	virtual	void		idle(void);

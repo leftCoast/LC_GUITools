@@ -381,7 +381,7 @@ void viewMgr::idle(void) {
 
 
 // ***************************************************
-// drawGroup, This is they guy that runs a bunch of sub
+// drawGroup, This is the guy that runs a bunch of sub
 // objects. He is both a drawObj and a viewMgr.
 // Before taking any action with a sub object the drawGroup
 // pushes its location onto the screen. This allows all sub
@@ -461,19 +461,19 @@ bool drawGroup::acceptEvent(event* inEvent,point* localPt) {
    
    bool	success;
    
-   success = false;												// No accepted yet.
-   if (theTouched==this) {										// Oh God no! Its me?!
+   success = false;													// No accepted yet.
+   if (theTouched==this) {											// Oh God no! Its me?!
    	return drawObj::acceptEvent(inEvent,localPt);		// In this one case, we are being dragged as a group.
    }
-	if (inRect(localPt)) {										// It's in our list or us, somewhere.
-		screen->pushOffset(x,y);								// Ok, push our offset for the sublist.
-		success = checkEvents(inEvent);						// See if they handle it.
-		screen->popOffset(x,y);									// Pop off the offset.
-		if (!success) {											// If no one took it.
+	if (inRect(localPt)) {											// It's in our list or us, somewhere.
+		screen->pushOffset(x,y);									// Ok, push our offset for the sublist.
+		success = checkEvents(inEvent);							// See if they handle it.
+		screen->popOffset(x,y);										// Pop off the offset.
+		if (!success) {												// If no one took it.
 			return drawObj::acceptEvent(inEvent,localPt);	// We return the standard check on ourselves.
 		}
 	}
-	return success;												// Return the ultimate result.
+	return success;													// Return the ultimate result.
 }
 
 
@@ -587,8 +587,8 @@ int drawList::lastY(void) {
 	
 	int	numViewable;
 	
-	numViewable = (height/itemHeight);	// Quick int division to force truncation.
-	return (numViewable-1) * itemHeight;		// To make sure first is at zero. All overages to bottom.
+	numViewable = (height/itemHeight);		// Quick int division to force truncation.
+	return (numViewable-1) * itemHeight;	// To make sure first is at zero. All overages to bottom.
 }
 
 
@@ -620,7 +620,7 @@ void drawList::showItem(drawObj* theItem) {
 }
 
 
-// What's the index of the guy at this position?
+// What's the guy at this position?
 drawObj* drawList::findItem(point* where) {
 	
 	drawObj*  trace;

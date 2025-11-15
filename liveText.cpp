@@ -31,7 +31,10 @@ void  liveText::addAColor(int timeMs,colorObj* color) {
 
 void liveText::hold(void) { holding = true; }
 
+
+bool liveText::isHolding(void) { return holding; };
  
+
 void liveText::release(bool reset) {
 
   holding = false;    // Take off the breaks.. 

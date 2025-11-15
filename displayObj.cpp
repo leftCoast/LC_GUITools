@@ -12,6 +12,7 @@ displayObj::displayObj(bool inGraphic,bool inColor,bool inTouch,bool inSD,bool i
 	readable = inReadable;
 	offsetX = 0;
 	offsetY = 0;
+	percBlack = 0;
   }
   
 
@@ -97,7 +98,41 @@ void	displayObj::drawLine(int locX,int locY,int locX2,int locY2,colorObj* inColo
 void	displayObj::drawLine(point* startPt,point* endPt,colorObj* inColor) { drawLine(startPt->x,startPt->y,endPt->x,endPt->y,inColor); }
 void	displayObj::drawPixel(int locX,int locY,colorObj* pColor) { }
 void	displayObj::drawPixelInvert(int x,int y) { }
-void 	displayObj::frameRectInvert(int x,int y,int width,int height) { }
+void 	displayObj::frameRectInvert(int x,int y,int width,int height) { }  
+
+
+// OLED displays have no backlight for dimming. And they burn out if NOT dimmed. This can
+// dim all the drawing to black as a screen saver.
+//
+// Instead of using the typical : inColor->getColor16();
+// for setting colors, use : dim16(inColor);
+// And use the method : setPercBlack();
+// to set the shading for all.
+
+void displayObj::setPercBlack(float percent) {
+	
+	if (percent<0) {
+		percBlack = 0;
+	} else if (percent>100) {
+	percBlack = 100;
+	} else {
+		percBlack = percent;
+	}
+}
+
+
+float displayObj::getPercBlack(void) { return percBlack; }
+
+
+word displayObj::dim16(colorObj* inColor) {
+
+	colorObj	tempColor;
+	
+	if (percBlack<=0) return inColor->getColor16();
+	if (percBlack>=100) return black.getColor16();
+	tempColor = inColor->mixColors(&black,percBlack);
+	return tempColor.getColor16();
+}
 
 
 void displayObj::fillRectGradient(int inX,int inY,int width,int height,colorObj* startColor,colorObj* endColor,bool rising,bool vertical) {

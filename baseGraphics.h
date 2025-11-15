@@ -47,9 +47,9 @@ class rect {
   	virtual	void	insetRect(int inset);											// Inset all sides by this much. Or expand if negative.
    virtual	void	addRect(rect* inRect);											// Become the rect that spans ourself and this incoming rect.
           	int  	maxX(void);                            					// Where's our last pixel?
-          	int  	maxY(void);                            					// Same as obove but in the Y direction.
+          	int  	maxY(void);                            					// Same as above but in the Y direction.
           	int  	minX(void);                            					// Where's our first pixel?
-          	int  	minY(void);                            					// Same as obove but in the Y direction.
+          	int  	minY(void);                            					// Same as above but in the Y direction.
   			  	bool 	inRect(int inX, int inY);              					// Is this point in us?
   			  	bool 	inRect(point* inPoint);											// Is this point in us?
   			  	point	getCorner(rectPt corner);										// Pass back the corner point.
