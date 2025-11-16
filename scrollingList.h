@@ -11,7 +11,7 @@
 // potentiometer that you can push to click. A very simple GUI
 // that is only really suited to really simple applications.
 //
-// Second is button iterface. But I've not written that one yet.
+// Second is button interface. But I've not written that one yet.
 //
 // Third is single touch, touchscreen. And that's what we're
 // working on today!

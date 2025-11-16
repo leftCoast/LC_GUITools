@@ -57,18 +57,18 @@ void scrollingList::doAction(event* inEvent,point* locaPt) {
 	
 	drawObj*	trace;
 	
-	if (inEvent->mType==dragBegin) {			// If its the start of a drag..
-		trace = theList();						// Locate the top item of the list.
-		if (trace) {
-			mStartPt.x = trace->x;				// Save off where it is now.
-			mStartPt.y = trace->y;				// More save off where it is now.
-		}
-	} else if (inEvent->mType==dragOn) {	// Or else, we're actually dragging..
-		if (mVertical) {							// If we're a vertical list..
-			dragVertical(inEvent);				// Deal with a vertical drag.
-		} else {										// Or esle we are a horizontal list..
-			dragHorizontal(inEvent);			// Deal with a horizontal drag.
-		}
+	if (inEvent->mType==dragBegin) {				// If its the start of a drag..
+		trace = theList();							// Locate the top item of the list.
+		if (trace) {									// If we have a list..
+			mStartPt.x = trace->x;					// Save off where it is now.
+			mStartPt.y = trace->y;					// More save off where it is now.
+		}													// 
+	} else if (inEvent->mType==dragOn) {		// Or else, we're actually dragging..
+		if (mVertical) {								// If we're a vertical list..
+			dragVertical(inEvent);					// Deal with a vertical drag.
+		} else {											// Or esle we are a horizontal list..
+			dragHorizontal(inEvent);				// Deal with a horizontal drag.
+		}													// 
 	} else if (inEvent->mType==liftEvent) {	// Or else, we're finished dragging..
 		needRefresh = false;							// We shouldn't need the refresh. We only scroll full lists. (No gaps)
 	}

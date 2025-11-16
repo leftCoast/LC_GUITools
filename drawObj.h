@@ -74,6 +74,7 @@ public:
 	virtual	void    	checkRefresh(void);
 				int		numObjects(void);
 				drawObj*	getObj(int index);
+				bool		findObj(drawObj* theObj);
 				drawObj*	theList(void);
 				void		touchAllAbove(drawObj* fromMe);
     virtual void    	idle(void);

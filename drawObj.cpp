@@ -351,6 +351,24 @@ int viewMgr::numObjects(void) { return (int)listHeader.countTail(); }
 drawObj* viewMgr::getObj(int index) { return (drawObj*)listHeader.getTailObj((int)index); }
 
 
+// Is this drawObj one of ours?
+bool viewMgr::findObj(drawObj* theObj) {
+
+	drawObj*	trace;
+	
+	if (theObj) {										// Sanity, they'll send in a NULL at the drop of a hat.
+		trace = theList();							// Make sure we're at the top.
+		while(trace) {									// While we have something to work with.
+			if (trace==theObj) {						// If we found it.
+				return true;							// We are done. Return success.
+			}												//
+			trace = (drawObj*)trace->dllNext;	// Hop to the next.
+		}													//
+	}														//
+	return false;										// Not on our list.
+}
+
+
 drawObj* viewMgr::theList(void) { return (drawObj*)listHeader.getTailObj(0); }
 
 
