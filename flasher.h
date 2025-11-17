@@ -1,21 +1,14 @@
 #ifndef flasher_h
-#define flasher_h
-
-
-// flasher.h contains the base classe for flashing things on the screen. Basically a two
-// frame sprit that repeats.
+#define flasher_h 
 
 
 #include <drawObj.h>
 #include <squareWave.h>
 
 
-// *****************************************************
-//                        flasher
-// *****************************************************
-
-// flasher is a drawObj that has two states that automatically flip back and forth.
-// The default is a two color rectangle changing colors every 1/2 second.
+// flasher is a drawObj that has two states that automatically flip back and forth. The
+// default is a two color rectangle changing colors every 1/2 second. Basically a two
+// frame sprit that repeats.
 
 class flasher :	public drawObj,
 						public squareWave {
