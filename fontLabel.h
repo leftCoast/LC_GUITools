@@ -31,8 +31,8 @@ class fontLabel : public label {
 				void	setFont(const GFXfont* font,int inHeight,int yOffset);
 	virtual	void  drawSelf(void);
 	
-				GFXfont*	ourFont;		// Our font.
-				int		fontOffset;
+				const GFXfont*	ourFont;		// Our font.
+				int				fontOffset;
 };
 
 

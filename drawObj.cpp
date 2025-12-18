@@ -29,7 +29,7 @@ drawObj::drawObj(rect* inRect,eventSet inEventSet)
 
 drawObj::drawObj(int inLocX, int inLocY, int inWidth,int inHeight,eventSet inEventSet)
 	: rect(inLocX,inLocY,inWidth,inHeight) {
-	
+
 	needRefresh	= true;		// Well Duh! We never been drawn yet!
 	focus			= false;		// But we're hopefull.
 	clicked		= false;
