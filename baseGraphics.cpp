@@ -36,21 +36,43 @@ float distance(point ptA,point ptB) {
 	return sqrt(widthSq + heighSq);
 }
 
+enum quadrant { nil, zeroPi, one, halfPi, two, allPi, three, oneAnHalfPi, four };
 
+quadrant findQuad(float deltaX,float deltaY) {
+
+	if (deltaX==0 && deltaY==0)	return nil;				// We got a point.
+	if (deltaX==0 && deltaY>0)		return halfPi;			// Straight up.
+	if (deltaX==0 && deltaY<0)		return oneAnHalfPi;	// straight down
+	if (deltaX>0 && deltaY==0)		return zeroPi;			// Straight right.
+	if (deltaX>0 && deltaY>0)		return one;				// First quadrent.
+	if (deltaX>0 && deltaY<0)		return four;			// Fourth quadrant.
+	if (deltaX<0 && deltaY==0)		return allPi;			// straight to left.
+	if (deltaX<0 && deltaY>0)		return two;				// second quadrent.
+	if (deltaX<0 && deltaY<0)		return three;			// Third quadrant
+	return nil;												 		// Not possible but? Say a point.
+}
+	
+	
+// Gives angle in radians from 3 O'clock counter clockwise. (Like trig stuff.)
 float	angle(point ptA,point ptB) {
 
-	float xDist;
-	float yDist;
-	float	angle;
+	float deltaX;
+	float deltaY;
 		
-	xDist = xDistance(ptA,ptB);
-	yDist	= yDistance(ptA,ptB);
-	if (xDist) {
-		angle = atan(yDist/xDist);
-	} else {
-		angle = M_PI/2;
+	deltaX = xDistance(ptA,ptB);
+	deltaY	= yDistance(ptA,ptB);
+	switch(findQuad(deltaX,deltaY)) {
+		case nil				: 
+		case zeroPi			: return 0;
+		case one				: return atan(deltaY/deltaX);
+		case halfPi			: return M_PI/2.0;
+		case two				: return M_PI - atan(deltaY/deltaX);
+		case allPi			: return M_PI;
+		case three			: return M_PI + atan(deltaY/deltaX);
+		case oneAnHalfPi	: return 1.5 * M_PI;
+		case four			: return 2 * M_PI - atan(deltaY/deltaX);
 	}
-	return angle;
+	return 0;		// Quiet! Compiler.
 }
 
 
@@ -62,8 +84,8 @@ point	rotate(point ptA,float angle) {
 	float	mag;
 	
 	mag = sqrt((ptA.x * ptA.x) + (ptA.y * ptA.y));
-	res.x = mag * cos(acos(ptA.x/mag)+angle);
-	res.y = mag * sin(asin(ptA.y/mag)+angle);
+	res.x = round(mag * cos(acos(ptA.x/mag)+angle));
+	res.y = round(mag * sin(asin(ptA.y/mag)+angle));
 	return res;
 }
 

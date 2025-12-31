@@ -16,12 +16,11 @@
   }; 
   
 //void	printPoint(point* inPt,char* name="Point : ");
-int	xDistance(point ptA, point ptB);
-int	yDistance(point ptA, point ptB);
-float distance(point ptA, point ptB);			// Measure the distance between two points. 
-float	angle(point ptA, point ptB);				// Radians, ptA is center point.
-point	rotate(point ptA,float angle);			// Rotate around the x.y axis. From current x,y location, angle (radians).
-
+int		xDistance(point ptA, point ptB);
+int		yDistance(point ptA, point ptB);
+float		distance(point ptA, point ptB);		// Measure the distance between two points. 
+float		angle(point ptA, point ptB);			// Radians, ptA is center point.
+point		rotate(point ptA,float angle);		// Rotate around the x.y axis. From current x,y location, angle (radians).
 
 // ***************************************************************
 // Base class for a rectangle. 
