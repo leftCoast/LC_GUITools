@@ -9,22 +9,23 @@ eventMgr 	ourEventMgr;
 
 eventType		mType;
 	
-	unsigned long	mTouchMs;
-	unsigned long	mLastMs;
-	unsigned long	mNumMs;
-	
-	point				mTouchPos;
-	point				mLastPos;
-	
-	int				mXDist;
-	int				mYDist;
-	float				mDist;
-	
-	float				mXPixlePerSec;
-	float				mYPixlePerSec;
-	float				mPixalPerSec;
-	
-	float				mAngle;
+unsigned long	mTouchMs;
+unsigned long	mLastMs;
+unsigned long	mNumMs;
+
+point				mTouchPos;
+point				mLastPos;
+
+int				mXDist;
+int				mYDist;
+float				mDist;
+
+float				mXPixlePerSec;
+float				mYPixlePerSec;
+float				mPixalPerSec;
+
+float				mAngle;
+
 
 /*	
 void printEvent(event* anEvent) {
@@ -64,7 +65,42 @@ void printEvent(event* anEvent) {
 	Serial.println();
 	
 	Serial.print(F("mAngle        : "));Serial.println(anEvent->mAngle);
+	Serial.print(F("mDragType     : "));Serial.println(anEvent->mDragType);
 };
+*/
+
+
+// ***************************************************
+// dDirection, Function for general drag directions.
+// Fuzzy math.
+// ***************************************************
+
+
+dragType dDirection(float angle,float tol) {
+	
+	dragType	result;
+	
+	result = noDrag;
+	if (angle<tol || angle>360-tol)		result = dragRight;
+	if (angle>90-tol && angle<90+tol)	result = dragUp;
+	if (angle>180-tol && angle<180+tol)	result = dragLeft;
+	if (angle>270-tol && angle<270+tol)	result = dragDn;
+	return result;
+}
+
+
+/*
+// Just in case you're debugging..
+void	dragTxt(dragType aDir) {
+
+	switch (aDir) {
+		case dragUp : Serial.print("drag up");			break;
+		case dragDn : Serial.print("drag down");		break;
+		case dragLeft : Serial.print("drag left");	break;
+		case dragRight : Serial.print("drag right");	break;
+		default			: Serial.print("drag ??");		break;
+	}
+}
 */
 
 
@@ -124,6 +160,7 @@ eventMgr::eventMgr(void) {
 	mNullEvent.mPixalPerSec		= 0;
 	
 	mNullEvent.mAngle				= 0;
+	mNullEvent.mDragType			= noDrag;
 }
 
 
@@ -229,7 +266,7 @@ void eventMgr::addEvent(eventType inType) {
 				newEvent->mYPixlePerSec	= (newEvent->mYDist/newEvent->mNumMs)*1000;		// Calculate the y speed. Pixels/sec.				
 				newEvent->mPixalPerSec	= (newEvent->mDist/newEvent->mNumMs)*1000;		// Calculate the total speed. Pixels/sec.
 	
-				newEvent->mAngle			= angle(mTouchPos,mLastPos);							// Calculate the actual angle, in radians.
+				newEvent->mAngle			= angle(mTouchPos,mLastPos);							// Calculate the actual angle, in degrees.
 			break;
 			case dragOn			:
 				newEvent->mType			= dragOn;					
@@ -267,7 +304,8 @@ void eventMgr::addEvent(eventType inType) {
 				newEvent->mYPixlePerSec	= (newEvent->mYDist/newEvent->mNumMs)*1000;		// Calculate the y speed. Pixels/sec.				
 				newEvent->mPixalPerSec	= (newEvent->mDist/newEvent->mNumMs)*1000;		// Calculate the total speed. Pixels/sec.
 	
-				newEvent->mAngle			= angle(mTouchPos,mLastPos);							// Calculate the actual angle, in radians.
+				newEvent->mAngle			= angle(mTouchPos,mLastPos);							// Calculate the actual angle, in degrees.
+				newEvent->mDragType		= dDirection(mAngle,DRAG_TOL);						// Calculate the drag type. dragUp, dragRight etc.
 			break;
 		}
 		newEventObj = new eventObj(newEvent);														// Create the node this will live in.
@@ -290,7 +328,6 @@ void eventMgr::idle(void) {
 	float	moveDist;
 	
 	if (screen->touched()) {									// If we've been touched! Or, are still touched..
-		//Serial.println("touch!");
 		mLastPos = screen->getPoint();						//	Update the last point we saw.
 		if (mTouched) {											// If last time we checked we were mTouched.
 			moveDist = distance(mTouchPos,mLastPos);		// Calculate the total distance from initial touch.
@@ -300,6 +337,7 @@ void eventMgr::idle(void) {
  				}														// 
 			} else if (ding()||moveDist>DRAG_DIST) {		// If our drag timer expired, or were moving, it's a drag.	
 				mDragging = true;									// Note that we are mDragging.
+				reset();
 				addEvent(dragBegin);								// Create a drag begin event.
 			}															//
 		} else {														// Else, this is initial contact!
@@ -313,6 +351,7 @@ void eventMgr::idle(void) {
 		if (mTouched) {											// Last time we checked we were mTouched.
 			mTouched = false;										// Save off that we're no longer mTouched.
 			mDragging = false;									// No matter, we're not mDragging.
+			reset();
 			addEvent(liftEvent);									// This means we got a lift.
 			if (!ding()) {											// If it was a "short" touch.
  				addEvent(clickEvent);							// That'll pass for a "click".

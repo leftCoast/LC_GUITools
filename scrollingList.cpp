@@ -1,4 +1,4 @@
-#include "scrollingList.h"
+#include <scrollingList.h>
 
 
 scrollingList::scrollingList(int x, int y, int width,int height, scrollType sType,eventSet inEventSet,bool vertical)
@@ -56,7 +56,7 @@ void scrollingList::dragHorizontal(event* inEvent) {
 void scrollingList::doAction(event* inEvent,point* locaPt) {
 	
 	drawObj*	trace;
-	
+
 	if (inEvent->mType==dragBegin) {				// If its the start of a drag..
 		trace = theList();							// Locate the top item of the list.
 		if (trace) {									// If we have a list..
@@ -66,7 +66,7 @@ void scrollingList::doAction(event* inEvent,point* locaPt) {
 	} else if (inEvent->mType==dragOn) {		// Or else, we're actually dragging..
 		if (mVertical) {								// If we're a vertical list..
 			dragVertical(inEvent);					// Deal with a vertical drag.
-		} else {											// Or esle we are a horizontal list..
+		} else {											// Or else we are a horizontal list..
 			dragHorizontal(inEvent);				// Deal with a horizontal drag.
 		}													// 
 	} else if (inEvent->mType==liftEvent) {	// Or else, we're finished dragging..

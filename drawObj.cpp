@@ -143,6 +143,7 @@ bool drawObj::acceptEvent(event* inEvent,point* localPt) {
 				&& inEvent->mType==liftEvent) {		// We only want lifts if we'd accepted the touch.
 				clicked		= false;						// And we're no longer clicked.
 				needRefresh = true;						// And here.. (see above)
+				theTouched	= NULL;						// Tell the world we're done with this event set.
 				return true;								// Again, tell the world the event has been accepted.
 			}
 			break;
@@ -167,6 +168,7 @@ bool drawObj::acceptEvent(event* inEvent,point* localPt) {
 				return true;									// Event has been accepted.
 			} else if (inEvent->mType==liftEvent) {	// Done dragging.
 				doAction(inEvent,localPt);					// Do our stuff.
+				theTouched	= NULL;							// Tell the world we're done with this event set.
 				return true;									// Again, tell the world the event has been accepted.
 			}
 		break;
@@ -179,17 +181,16 @@ bool drawObj::acceptEvent(event* inEvent,point* localPt) {
 					return true;							// Tell the world the event has been accepted.
 				}
 			} 
-			if (inEvent->mType==dragBegin) {			// If, the dragging finger has started..
-				if (inRect(localPt)) {					// and if its on us..
-					doAction(inEvent,localPt);			// Do our stuff.
-					return true;
-				}
+			if (inEvent->mType==dragBegin) {				// If, the dragging finger has started..
+				doAction(inEvent,localPt);					// We're already selected so.. Do our stuff.
+				return true;									// We'll take it
 			} else if (inEvent->mType==dragOn) {		// still moving,
 				doAction(inEvent,localPt);					// Stil dragging? Keep drawing.
 				return true;									// Event has been accepted.
 			} else if (inEvent->mType==liftEvent) {	// Done dragging.
 				clicked		= false;							// Might want to show we're NOT clicked on.
 				doAction(inEvent,localPt);					// Do our stuff.
+				theTouched	= NULL;							// Tell the world we're done with this event set.
 				return true;									// Again, tell the world the event has been accepted.
 			}
 		break;
@@ -479,9 +480,9 @@ bool drawGroup::acceptEvent(event* inEvent,point* localPt) {
    
    bool	success;
    
-   success = false;													// No accepted yet.
+   success = false;													// Not accepted yet.
    if (theTouched==this) {											// Oh God no! Its me?!
-   	return drawObj::acceptEvent(inEvent,localPt);		// In this one case, we are being dragged as a group.
+   	return drawObj::acceptEvent(inEvent,localPt);		// In this one case, probably being dragged as a group?
    }
 	if (inRect(localPt)) {											// It's in our list or us, somewhere.
 		screen->pushOffset(x,y);									// Ok, push our offset for the sublist.

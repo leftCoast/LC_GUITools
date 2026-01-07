@@ -1,6 +1,8 @@
 #include <baseGraphics.h>
 #include <math.h>
 
+
+
 #define DEF_LOC_X  16    // Just anything so the user can see something.
 #define DEF_LOC_Y  16
 #define DEF_SIZE_X 16
@@ -10,12 +12,14 @@
 void printPoint(point* inPt,char* name) {
 
 	Serial.print(name);
-	Serial.print(inPt->x);
-	Serial.print(F(", "));
-	Serial.println(inPt->y);
+   Serial.print("\t: ");
+   Serial.print(inPt->x);
+   Serial.print(F(", "));
+   Serial.println(inPt->y);
 }
 */
-	
+
+
 int	xDistance(point ptA,point ptB) { return ptB.x - ptA.x; }
 
 
@@ -36,43 +40,42 @@ float distance(point ptA,point ptB) {
 	return sqrt(widthSq + heighSq);
 }
 
-enum quadrant { nil, zeroPi, one, halfPi, two, allPi, three, oneAnHalfPi, four };
+// This does the straight trig. calcualtion.
+float calcAngle(float deltaX,float deltaY) {
 
-quadrant findQuad(float deltaX,float deltaY) {
+   float rad;
 
-	if (deltaX==0 && deltaY==0)	return nil;				// We got a point.
-	if (deltaX==0 && deltaY>0)		return halfPi;			// Straight up.
-	if (deltaX==0 && deltaY<0)		return oneAnHalfPi;	// straight down
-	if (deltaX>0 && deltaY==0)		return zeroPi;			// Straight right.
-	if (deltaX>0 && deltaY>0)		return one;				// First quadrent.
-	if (deltaX>0 && deltaY<0)		return four;			// Fourth quadrant.
-	if (deltaX<0 && deltaY==0)		return allPi;			// straight to left.
-	if (deltaX<0 && deltaY>0)		return two;				// second quadrent.
-	if (deltaX<0 && deltaY<0)		return three;			// Third quadrant
-	return nil;												 		// Not possible but? Say a point.
+   if (deltaX==0) {
+      if (deltaY>0) return 90;
+      if (deltaY<0) return 270;
+      if (deltaY==0) return NAN;
+   } else if (deltaY==0) {
+      if (deltaX>0)  return 0;
+      else if (deltaX<0) return 180;
+   }
+   if (deltaX>0 && deltaY>0) {					// quad 1
+      rad = atan(deltaY/deltaX);					// 
+   } else if (deltaX>0 && deltaY<0) {			// quad 4
+      rad = (2*M_PI) + atan(deltaY/deltaX);	//
+   } else if (deltaX<0 && deltaY>0) {			// quad 2
+      rad = M_PI + atan(deltaY/deltaX);		//
+   } else {												// quad 3
+       rad = M_PI + atan(deltaY/deltaX);		//
+   }														//
+   return(rad * 180/M_PI);							// Return the result as degrees from East. CCW.
 }
-	
-	
-// Gives angle in radians from 3 O'clock counter clockwise. (Like trig stuff.)
-float	angle(point ptA,point ptB) {
 
+	
+// Gives angle in degrees from 3 O'clock counter clockwise. (Like trig stuff.) The
+// backwards y values must be dealt with here.
+float angle(point ptA,point ptB) {
+	
 	float deltaX;
 	float deltaY;
-		
-	deltaX = xDistance(ptA,ptB);
-	deltaY	= yDistance(ptA,ptB);
-	switch(findQuad(deltaX,deltaY)) {
-		case nil				: 
-		case zeroPi			: return 0;
-		case one				: return atan(deltaY/deltaX);
-		case halfPi			: return M_PI/2.0;
-		case two				: return M_PI - atan(deltaY/deltaX);
-		case allPi			: return M_PI;
-		case three			: return M_PI + atan(deltaY/deltaX);
-		case oneAnHalfPi	: return 1.5 * M_PI;
-		case four			: return 2 * M_PI - atan(deltaY/deltaX);
-	}
-	return 0;		// Quiet! Compiler.
+	
+	deltaX = xDistance(ptA,ptB);		// Do the X thing.
+	deltaY = -yDistance(ptA,ptB);		// Do the Y thing, but reverese it.
+	return calcAngle(deltaX,deltaY);	// Pass in the calcualted deltas.
 }
 
 

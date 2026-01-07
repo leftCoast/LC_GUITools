@@ -6,8 +6,7 @@
 #include <timeObj.h>
 #include <baseGraphics.h>
 
-#define	DRAG_TIME	150	// How many milliseconds before it goes from a click to a drag?
-#define	DRAG_DIST	10		// If the finger moves further than this, we'll call it a drag.
+
 // ***************************************************************
 // Here we have the management of screen actions. Get the touches
 // and lifts then interpret them into touch, click, drag etc.
@@ -15,7 +14,26 @@
 // ***************************************************************
 
 
-enum eventType { nullEvent, touchEvent, liftEvent, dragBegin, dragOn, clickEvent };
+// ***************************************************************
+// Drag tools..
+// ***************************************************************
+
+
+#define	DRAG_TIME	150	// How many milliseconds before it goes from a click to a drag?
+#define	DRAG_DIST	10		// If the finger moves further than this, we'll call it a drag.
+#define 	DRAG_TOL		20		// +/-  degrees from center line.
+
+
+enum dragType {
+	noDrag,
+	dragUp,
+	dragDn,
+	dragRight,
+	dragLeft
+};
+
+dragType dDirection(float angle,float tol);
+//extern void	dragTxt(dragType aDir);
 
 
 
@@ -25,6 +43,9 @@ enum eventType { nullEvent, touchEvent, liftEvent, dragBegin, dragOn, clickEvent
 // where it happend, how fast is his finger moving? How
 // far has it moved since the last event?
 // ***************************************************
+
+
+enum eventType { nullEvent, touchEvent, liftEvent, dragBegin, dragOn, clickEvent };
 
 
 struct event {
@@ -46,6 +67,7 @@ struct event {
 	float				mPixalPerSec;
 	
 	float				mAngle;
+	dragType			mDragType;
 };
 
 //void printEvent(event* anEvent);
