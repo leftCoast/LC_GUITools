@@ -594,7 +594,7 @@ void drawList::setPositions(int offset) {
 	trace = theList();
 	while(trace!=NULL) {										// Standard loop through link list.
 		trace->y = offset + i++ *  itemHeight;			// Each is moved by itemHeight from the last.
-		trace->setNeedRefresh();							// Just in case, everyione is told to redraw.
+		trace->setNeedRefresh();							// Just in case, everyone is told to redraw.
 		trace = (drawObj* )trace->dllNext;				// Hop to the next in the list.
 	}
 }
