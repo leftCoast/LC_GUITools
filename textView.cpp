@@ -632,21 +632,21 @@ void textView::deleteText(int startIndex, int numChars)  {
 
 void textView::drawSelf(void) {
 
-  char* textPtr;
-  int   locY;
+	char* textPtr;
+	int   locY;
   
-  mManager.indexSet(mFirstLine + mNumLines);
-  screen->setTextColor(&mTextColor);
-  screen->setTextSize(mTextSize);
-  screen->setTextWrap(false);
-  for (int i = 0; i < mNumLines; i++) {
-    textPtr =  mManager.formatLine(i + mFirstLine);
-    locY = y + (i * (mTHeight+mLineSpace));
-    screen->fillRect(x,locY,width,mTHeight+mLineSpace,&mBackColor);
-    screen->setCursor(x,locY);
-    screen->drawText(textPtr);
-  }
-  //screen->drawRect(x,y,width,height,&blue);
+	mManager.indexSet(mFirstLine + mNumLines);
+	screen->setTextColor(&mTextColor);
+	screen->setTextSize(mTextSize);
+	screen->setTextWrap(false);
+	for (int i = 0; i < mNumLines; i++) {
+		textPtr =  mManager.formatLine(i + mFirstLine);
+		locY = y + (i * (mTHeight+mLineSpace));
+		screen->fillRect(x,locY,width,mTHeight+mLineSpace,&mBackColor);
+		screen->setCursor(x,locY);
+		screen->drawText(textPtr);
+	}
+	//screen->drawRect(x,y,width,height,&blue);
 }
 
 char* textView::seeText(void) {
