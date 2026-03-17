@@ -39,8 +39,6 @@ class displayObj {
 	virtual	int	width(void);
 	virtual	int	height(void);
 	virtual	bool	begin(void);
-  	virtual	void	startWrite(void);
-  	virtual	void	endWrite(void);
 	virtual	void	setRotation(byte inRotation);
 	virtual	void	setTextColor(colorObj* tColor);
 	virtual	void	setTextColor(colorObj* tColor,colorObj* bColor);

@@ -62,8 +62,6 @@ point	displayObj::gP(point* lP) {
 
 int	displayObj::width(void) { return 0; }	// Better fill these two out..
 int	displayObj::height(void) { return 0; }	//
-void	displayObj::startWrite(void) {  }
-void	displayObj::endWrite(void) {  }
 bool	displayObj::begin(void) { return false; }
 void	displayObj::setRotation(byte inRotation) { }
 void	displayObj::setTextColor(colorObj* inColor) { }
