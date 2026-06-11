@@ -190,7 +190,13 @@ void label::setValue(const char* str) {
 
 
 // We want to know how long the string is.. (*** REMEBER NOT COUNTING '\0' ***)
-int label::getNumChars(void) { return strlen(buff); }
+int label::getNumChars(void) { 
+
+	if (buff) {
+		return strlen(buff);
+	}
+	return 0;
+}
 
 
 // We want to know how many chars can we display?
@@ -205,7 +211,7 @@ void label::getText(char* inBuff) { strcpy(inBuff,buff); }
 char*	label::getTextBuff(void) { return buff; }
 
 				
-int label::getTextWidth(void) { return(CHAR_WIDTH*textSize*strlen(buff)); }
+int label::getTextWidth(void) { return(CHAR_WIDTH*textSize*getNumChars()); }
 
 
 int label::getTextHeight(void) { return(CHAR_HEIGHT*textSize); }

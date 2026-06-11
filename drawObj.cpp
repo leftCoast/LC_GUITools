@@ -289,8 +289,10 @@ viewMgr::~viewMgr(void) { listHeader.dumpList(); }
 // New objects go on top.
 void viewMgr::addObj(drawObj* newObj) {
     
-    newObj->linkAfter(&listHeader);	// Put the new guy at the top of the list.
-    hookup();								// hookup on the first addition. Ignored otherwise.
+	if (newObj) {								// Sanity! We're not adding NULL objects today!
+		newObj->linkAfter(&listHeader);	// Put the new guy at the top of the list.
+		hookup();								// hookup on the first addition. Ignored otherwise.
+	}
 }
 
 // Now anyone can tell us to do that.
@@ -500,8 +502,10 @@ bool drawGroup::acceptEvent(event* inEvent,point* localPt) {
 // They get their draw calls from the parent getting called.              					
 void drawGroup::addObj(drawObj* newObj) {
 
-  	newObj->linkAfter(&listHeader);   	// Put the new guy at the top of the list.
-	needRefresh = true;	
+	if (newObj) {								// Sanity! We're not adding NULL objects today!
+  		newObj->linkAfter(&listHeader);   	// Put the new guy at the top of the list.
+		needRefresh = true;
+	}	
 }
 
 
@@ -571,15 +575,17 @@ drawList::~drawList() { }
 // anyway. Too bad, inherit and fix it if this ain't good enough.					
 void drawList::addObj(drawObj* newObj) {
 
-	if (mVertical) {
-		itemHeight = max(itemHeight,newObj->height);
-		newObj->setLocation(0,numObjects()*itemHeight);
-	} else {
-		itemWidth = max(itemWidth,newObj->width);
-		newObj->setLocation(numObjects()*itemWidth,0);
+	if (newObj) {															// Sanity! We're not adding NULL objects today!
+		if (mVertical) {
+			itemHeight = max(itemHeight,newObj->height);
+			newObj->setLocation(0,numObjects()*itemHeight);
+		} else {
+			itemWidth = max(itemWidth,newObj->width);
+			newObj->setLocation(numObjects()*itemWidth,0);
+		}
+		newObj->linkToEnd(&listHeader);   							// Put the new guy at the BOTTOM of the list.
+		needRefresh = true;
 	}
-	newObj->linkToEnd(&listHeader);   									// Put the new guy at the BOTTOM of the list.
-	needRefresh = true;
 }
 
 
