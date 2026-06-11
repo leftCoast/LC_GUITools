@@ -183,23 +183,27 @@ void lineManager::appendText(const char* text) {
 	int   numOurChars;
 	int   totalChars;
 	
-	if (text) {                                   // Sanity, did they pass us a NULL?
-		if (text[0] != '\0') {                      // I don't like the look of these people. Did they pass us an empty string?
-			numNewChars = strlen(text);               // save off how many charactors they gave us.
-			numOurChars = strlen(mTextBuff);          // save off how many charactors we have.
-			totalChars = numOurChars + numNewChars;   // Figure total buffer length.
-			buff = (char*)malloc(totalChars + 1);     // Allocate the buffer.
-			if (buff) {                               // If we got one.
-				trimLastMarker();								// There is a really good chance the last line will change. Knock out the old one.
-				if (mTextBuff) {
-					strcpy(buff, mTextBuff);                // Copy over our text.
-					strcpy(&buff[numOurChars], text);       // Then their text. (on top of the last '\0')
-					free(mTextBuff);                        // loose our old text buffer.
-					mTextBuff = buff;                       // Point to this shiny new one.
-				} else {                                  // Wait, we have no buffer at all?
-					strcpy(buff, text);                     // No worries mate! We do this kind of thing all the time!
-					mTextBuff = buff;                       // And there you go, your own text buffer. We won't tell anyone.
-					indexAll();										// we try this?
+	if (text) {                        						// Sanity, did they pass us a NULL?
+		if (!mTextBuff) {											// Wait, if we have no text..
+			setText(text);											// In this case we just do a setTExt().
+		} else {														// Else, we already have a text buffer..
+			if (text[0] != '\0') {                      	// I don't like the look of these people. Did they pass us an empty string?
+				numNewChars = strlen(text);               // save off how many charactors they gave us.
+				numOurChars = strlen(mTextBuff);          // save off how many charactors we have.
+				totalChars = numOurChars + numNewChars;	// Figure total buffer length.
+				buff = (char*)malloc(totalChars + 1);     // Allocate the buffer.
+				if (buff) {                               // If we got one.
+					trimLastMarker();								// There is a really good chance the last line will change. Knock out the old one.
+					if (mTextBuff) {
+						strcpy(buff, mTextBuff);                // Copy over our text.
+						strcpy(&buff[numOurChars], text);       // Then their text. (on top of the last '\0')
+						free(mTextBuff);                        // loose our old text buffer.
+						mTextBuff = buff;                       // Point to this shiny new one.
+					} else {                                  // Wait, we have no buffer at all?
+						strcpy(buff, text);                     // No worries mate! We do this kind of thing all the time!
+						mTextBuff = buff;                       // And there you go, your own text buffer. We won't tell anyone.
+						indexAll();										// we try this?
+					}
 				}
 			}
 		}
@@ -216,67 +220,77 @@ void lineManager::insertText(int index, const char* text) {
   int             totalChars;
   int             i;
 
-  if (text) {                                         // Sanity, did they pass us a NULL?
-    if (text[0] != '\0') {                            // I don't like the look of these people. Did they pass us an empty string?
-      numOurChars = strlen(mTextBuff);                // save off how many charactors we have.
-      if (index <= numOurChars) {                     //
-        trimList(index);                              // The list is corrupt from here on.
-        numNewChars = strlen(text);                   // save off how many charactors they gave us.
-        totalChars = numOurChars + numNewChars;       // Figure total buffer length.
-        buff = (char*)malloc(totalChars + 1);         // Allocate the buffer.
-        if (buff) {                                   // If we got one.
-          for (i = 0; i < index; i++) {               // Copy over the first piece of our text.
-            buff[i] = mTextBuff[i];
-          }
-          strcpy(&buff[i], text);                     // Then their text.
-          strcpy(&buff[i + numNewChars], &mTextBuff[i]); // And the rest of our text.
-          free(mTextBuff);                            // loose our old text buffer.
-          mTextBuff = buff;                           // Point to this shiny new one.
-          trimList(index);                            // Trim outdated lines.
-        }
-      } else {
-        appendText(text);                             // Trying to put text beyond us? Just append it and hope they are happy.
-      }
-    }
-  }
+	if (text) {                        									// Sanity, did they pass us a NULL?
+		if (!mTextBuff) {														// Wait, if we have no text..
+			setText(text);														// In this case we just do a setTExt().
+		} else {																	// Else, we already have a text buffer..
+			if (text[0] != '\0') {                            		// I don't like the look of these people. Did they pass us an empty string?
+				numOurChars = strlen(mTextBuff);                	// save off how many charactors we have.
+				if (index <= numOurChars) {                     	//
+				  trimList(index);                              	// The list is corrupt from here on.
+				  numNewChars = strlen(text);                   	// save off how many charactors they gave us.
+				  totalChars = numOurChars + numNewChars;       	// Figure total buffer length.
+				  buff = (char*)malloc(totalChars + 1);         	// Allocate the buffer.
+				  if (buff) {                                   	// If we got one.
+					 for (i = 0; i < index; i++) {               	// Copy over the first piece of our text.
+						buff[i] = mTextBuff[i];
+					 }
+					 strcpy(&buff[i], text);                     	// Then their text.
+					 strcpy(&buff[i + numNewChars], &mTextBuff[i]);	// And the rest of our text.
+					 free(mTextBuff);                            	// loose our old text buffer.
+					 mTextBuff = buff;                           	// Point to this shiny new one.
+					 trimList(index);                            	// Trim outdated lines.
+				  }																//
+				} else {															//
+				  appendText(text);											// Trying to put text beyond us? Just append it and hope they are happy.
+				}
+			}
+		}
+	}
 }
 
 
+// I DON"T THINK THIS WILL WORK AT ALL!!!
 // Remove some text from middle, beginning? End?
-void lineManager::deleteText(int startIndex, int numChars) {
+//void lineManager::deleteText(int startIndex, int numChars) {
+void lineManager::deleteText(int startIndex,int endIndex) {
 
   int   textLen;
-  int   endIndex;
+  //int   endIndex;
   char* buff;
 
-  if (mTextBuff && numChars > 0) {                    // Sanity, we do have some right? And something to cut off?
-    textLen = strlen(mTextBuff);                      // Get a char count.
-    if (startIndex < textLen) {                       // Is the chop spot within the text?
-      trimList(startIndex);                           // In any case we'll need to chop at least this much off.
-      endIndex = startIndex + numChars - 1;           // Calculate the ending index.
-      if (endIndex >= textLen) {                      // No trailing to deal with.
-        mTextBuff[startIndex] = '\0';                 // Mark the end of the buffer.
-        buff = (char*)malloc(startIndex + 1);         // Allocate new buffer.
-        strcpy(buff, mTextBuff);                      // copy in remeains of old buffer.
-        free(mTextBuff);                              // Dispose of the old buffer.
-        mTextBuff = buff;                             // Point at the fresh new buffer.
-      } else {                                        // We have trailing text to move up.
-        endIndex++;                                   // Point past to the first saved char.
-        while (mTextBuff[endIndex] != '\0') {         // We do this 'till we hit the end.
-          mTextBuff[startIndex] = mTextBuff[endIndex]; // Hop over the chars one by one.
-          startIndex++;                               // Updaiting the pointers.
-          endIndex++;                                 //
-        }
-        mTextBuff[startIndex] = '\0';                 // On exit startIndex is pointing to the next place beyond text. Stamp in null char.
-        textLen = strlen(mTextBuff);                  // Grab lenth.
-        buff = (char*)malloc(textLen + 1);            // Allocate buffer.
-        strcpy(buff, mTextBuff);                      // Fill buffer.
-        free(mTextBuff);                              // Dump old buffer.
-        mTextBuff = buff;                             // replace with new buffer.
-      }
-    }
-  }
+	textLen = getStrlen();												// Get our char count.
+	if (textLen>0) {														// Sanity, we do have some right?
+		if (startIndex < textLen) {									// Is the chop spot within the text?
+			trimList(startIndex);                           	// In any case we'll need to chop at least this much off.
+			if (endIndex >= textLen) {                      	// No trailing to deal with.
+				mTextBuff[startIndex] = '\0';                 	// Mark the end of the buffer.
+				buff = (char*)malloc(startIndex + 1);         	// Allocate new buffer.
+				if (buff) {													// We got the RAM?
+					strcpy(buff, mTextBuff);							// copy in remeains of old buffer.
+					free(mTextBuff);										// Dispose of the old buffer.
+					mTextBuff = buff;										// Point at the fresh new buffer.
+				}																//
+			} else {                                        	// We have trailing text to move up.
+				endIndex++;                                   	// Point past to the first saved char.
+				while (mTextBuff[endIndex] != '\0') {         	// We do this 'till we hit the end.
+					mTextBuff[startIndex] = mTextBuff[endIndex];	// Hop over the chars one by one.
+					startIndex++;											// Updaiting the pointers.
+					endIndex++;												//
+				}																//
+				mTextBuff[startIndex] = '\0';							// On exit startIndex is pointing to the next place beyond text. Stamp in null char.
+				textLen = strlen(mTextBuff);							// Grab lenth.
+				buff = (char*)malloc(textLen + 1);					// Allocate buffer.
+				if (buff) {													// We got the RAM?
+					strcpy(buff, mTextBuff);							// Fill buffer.
+					free(mTextBuff);										// Dump old buffer.
+					mTextBuff = buff;										// replace with new buffer.
+				}
+			}
+		}
+	}
 }
+
 
 
 // Index all the text.
@@ -436,6 +450,16 @@ int lineManager::getLineNum(int index) {
     lineNum = getExistingLineNum(index);  // Grab the line number, or error, now.
   }
   return lineNum;                         // Off it goes!
+}
+
+
+// Return a count of all the chars. Not the trailing NULL char.
+int lineManager::getStrlen(void) {
+
+	if (mTextBuff) {
+		return strlen(mTextBuff);
+	}
+	return 0;
 }
 
 

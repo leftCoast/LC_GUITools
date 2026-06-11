@@ -68,7 +68,8 @@ class lineManager : public linkList {
 				int         getExistingLineNum(int index);				// Want to know if this lineMarker exists. Return it's index if found. -1 if not.
 				int         getLineNum(int index);							// Want the line this guy is in, Index as neccisary.
 				int         getNumLines(void);								// Count ALL the lines. Index as neccisary.
-				void        trimLastMarker(void);							// KNock out the last marker, just like it said. (Comes in handy)
+				int			getStrlen(void);									// Return a count of all the chars. Not the trailing NULL char.
+				void        trimLastMarker(void);							// Knock out the last marker, just like it said. (Comes in handy)
 				void        trimList(int index);								// Find the line that includes this index. Delete it and its tail.
 
 				char*       mTextBuff;											// Our string of text to manage.
