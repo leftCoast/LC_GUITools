@@ -206,7 +206,7 @@ void eventMgr::addEvent(eventType inType) {
 
 	event*		newEvent;		// A pointer to where the event info will live.
 	eventObj*	newEventObj;	// A pointer to the even object that will live in our queue and HOLD the pointer to the event info.. Wow!
-	//Serial.println("add event");
+
 	newEvent = NULL;															// The pointer needs to start as NULL.
 	if (resizeBuff(sizeof(event),(uint8_t**)&newEvent)) {			// Becuse we allocate with resizeBuff();
 		switch(inType) {														// Check the flavor..
