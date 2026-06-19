@@ -72,6 +72,7 @@ public:
     			void		dumpDrawObjList(void);
             bool		checkEvents(event* theEvent);
 	virtual	void    	checkRefresh(void);
+	virtual	bool		listIdle(void);
 				int		numObjects(void);
 				drawObj*	getObj(int index);
 				bool		findObj(drawObj* theObj);

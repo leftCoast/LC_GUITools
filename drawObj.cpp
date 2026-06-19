@@ -262,7 +262,7 @@ void drawObj::setCallback(void (*funct)(void)) { callback = funct; }
 viewMgr 		viewList;
 drawObj*		currentFocus	= NULL;	// Totally global because? There's only ONE user.
 drawObj*		theTouched		= NULL;	// Who's accepted a finger touch on the screen?
-bool			drawing			= false;
+//bool			drawing			= false;
 
 
 void	setFocusPtr(drawObj* newFocus) {
@@ -338,11 +338,27 @@ void viewMgr::checkRefresh(void) {
 	trace = (drawObj*)listHeader.getLast();	// make sure we're at the bottom.
 	while(trace && trace!=(&listHeader)) {		// While not NULL or pointing at our header.
 		if (trace->wantRefresh()) {				// Does this guy want refresh?
-      	drawing = true;							// We gotta' draw something. So its true.
+      	//drawing = true;							// We gotta' draw something. So its true.
       	trace->draw();								// Call his Draw method.
 		}
       trace = (drawObj*)trace->dllPrev;		// Bump up the list.
 	}
+}
+
+
+// Has the list finished doing drawing and things? Is it currently idle?
+bool viewMgr::listIdle(void) {
+
+	drawObj*	trace;
+	
+	trace = (drawObj*)listHeader.getLast();	// make sure we're at the bottom.
+	while(trace && trace!=(&listHeader)) {		// While not NULL or pointing at our header.
+		if (trace->wantRefresh()) {				// Does this guy want refresh?
+      	return false;								// He does? We got things to do!
+		}
+      trace = (drawObj*)trace->dllPrev;		// Bump up the list.
+	}
+	return true;										// All quiet on the Western Front.
 }
 
 
