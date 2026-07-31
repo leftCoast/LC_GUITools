@@ -1,5 +1,5 @@
 #include <drawObj.h>
-
+//#include <debug.h>
 // ***********************************
 
 drawObj::drawObj() {
@@ -554,7 +554,7 @@ void	drawGroup::draw(void) {
 // We're NOT the one to initiate the event chain. Inherited can
 // overwrite and do stuff, that'll be fine. This should block
 // bad behavior by us.
-void	drawGroup::idle(void) { }
+void	drawGroup::idle(void) {  }
 
 
 

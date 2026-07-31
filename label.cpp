@@ -76,14 +76,18 @@ label::label(rect* inRect,const char* inText,int textSize)
 label::label(label* aLabel)
 	: drawObj(aLabel) {
 	
-	buff = NULL;								// Best to have this initialized!
-	setValue(aLabel->buff);
-	setTextSize(aLabel->textSize);
-	setJustify(aLabel->justify);
-	setColors(&aLabel->textColor,&aLabel->backColor);
-	transp = aLabel->transp;
-	setPrecision(aLabel->prec);
-	needRefresh = true;
+	if (aLabel) {
+		buff = NULL;								// Best to have this initialized!
+		setValue(aLabel->buff);
+		setTextSize(aLabel->textSize);
+		setJustify(aLabel->justify);
+		setColors(&aLabel->textColor,&aLabel->backColor);
+		transp = aLabel->transp;
+		setPrecision(aLabel->prec);
+		needRefresh = true;
+	} else {
+		initLabel(); 								// Unless they hand us a NULL. Sheesh..
+	}
 }	
 
 	

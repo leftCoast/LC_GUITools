@@ -22,9 +22,9 @@
 // For the Teensy type display
 #define AFF_SANS_BOLD_24_OB	&FreeSansBoldOblique24pt7b,45,6
 #define AFF_SANS_BOLD_12_OB	&FreeSansBoldOblique12pt7b,24,-1,4	// Good!
-#define AFF_SANS_BOLD_9_OB		&FreeSansBoldOblique9pt7b,5,-4
-#define AFF_SANS_9_OB			&FreeSansOblique9pt7b,16,0				// Good!
-#define AFF_MONO_12				&FreeMono12pt7b,20,2						// Good!
+#define AFF_SANS_BOLD_9_OB		&FreeSansBoldOblique9pt7b,9,-1,1		// Good!
+#define AFF_SANS_9_OB			&FreeSansOblique9pt7b,16,0				// Good!, wait.. needs third value.
+#define AFF_MONO_12				&FreeMono12pt7b,20,2						// Good!, Also needs third value.
 #define AFF_MONO_9				&FreeMono9pt7b,17,-3
 
 

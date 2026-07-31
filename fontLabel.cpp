@@ -1,4 +1,4 @@
-#include "fontLabel.h"
+#include <fontLabel.h>
  
  
 fontLabel::fontLabel(void)
@@ -61,12 +61,15 @@ void fontLabel::drawSelf(void) {
 	int	yLoc;
 	
 	screen->setTextWrap(false);
-	screen->setTextColor(&textColor);
+	if (transp) {
+		screen->setTextColor(&textColor);
+	} else {
+		screen->setTextColor(&textColor,&backColor);
+	}
 	screen->setFont(ourFont);
 	screen->setTextSize(1);
 	xLoc = x + fontXOffset;
 	yLoc = y + fontYOffset;
-	
 	screen->setCursor(xLoc,yLoc);
 	screen->drawText(buff);
 	//screen->drawRect(this,&blue);
