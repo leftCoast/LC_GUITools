@@ -59,7 +59,7 @@ void fontLabel::drawSelf(void) {
 
 	int	xLoc;
 	int	yLoc;
-	
+
 	screen->setTextWrap(false);
 	if (transp) {
 		screen->setTextColor(&textColor);
@@ -71,8 +71,8 @@ void fontLabel::drawSelf(void) {
 	xLoc = x + fontXOffset;
 	yLoc = y + fontYOffset;
 	screen->setCursor(xLoc,yLoc);
+	//screen->drawRect(this,&cyan);
 	screen->drawText(buff);
-	//screen->drawRect(this,&blue);
 	screen->setFont(NULL);
 }
 	
