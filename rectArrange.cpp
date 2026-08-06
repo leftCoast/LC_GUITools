@@ -31,7 +31,8 @@ void rectArrange::settings(rect* area,int inMinWSpace,int inMaxWSpace,int inMinH
 	isOdd			= (bool)(getCount()%2);
 }
 
-	
+
+// Just like it says, add something rectangular to the list.	
 void rectArrange::addRect(rect* inRect) {
 
 	rectListObj*	newItem;
@@ -46,7 +47,7 @@ void rectArrange::addRect(rect* inRect) {
 }
 
 
-// Width of all the rects in the list. Just the rects, no spaces.
+// Calculate the width of all the rects in the list. Just the rects, no spaces.
 int rectArrange::totalRectWidth(void) {
 	
 	int				totalWidth;
