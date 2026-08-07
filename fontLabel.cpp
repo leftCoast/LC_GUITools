@@ -76,37 +76,44 @@ void fontLabel::drawSelf(void) {
 	screen->setFont(NULL);
 }
 	
-/*
-void fontLabel::drawSelf(void) {
 
-	rect	bounds;
-	int	yLoc;
-	int	offset;
+
+// ******************************  erasableText   ******************************
+
+
+erasableText::erasableText(void)
+	: fontLabel() { }
 	
-	screen->setTextWrap(false);
-	screen->setTextColor(&textColor);
-	screen->setFont(ourFont);
-	screen->setTextSize(1);
-	yLoc = y+height+fontYOffset;
-	bounds = screen->getTextRect(buff);
-	switch(justify) {
-		case TEXT_RIGHT	:
-			offset = (width-bounds.width)+fontXOffset;
-		break;
-		case TEXT_LEFT		:
-			offset = 0+fontXOffset;
-		break;
-		case TEXT_CENTER	:
-			offset = (width-bounds.width)+fontXOffset;
-			offset = offset/2;
-		break;
-		default 				:
-			offset = 0;
-		break;
-	}
-	screen->setCursor(x+offset,yLoc);
-	screen->drawText(buff);
-	screen->drawRect(this,&red);
-	screen->setFont(NULL);
+	
+erasableText::erasableText(rect* inRect)
+	: fontLabel(inRect) { }
+	
+	
+erasableText::erasableText(int inX, int inY, int inW,int inH)
+	: fontLabel(inX,inY,inW,inH) { }
+	
+	
+erasableText::~erasableText(void) { }
+
+	
+void erasableText::drawSelf(void) {
+	
+	rect	aRect(this);
+	int	xLoc;
+	int	yLoc;
+	
+	//aRect.width = aRect.width+8;			// Why?
+	screen->fillRect(&aRect,&backColor);	// Erase the value.
+	//screen->drawRect(&aRect,&green);		// GREEN for debugging.
+	screen->setTextWrap(false);				// Wrap is not a good plan ever.
+	screen->setTextColor(&textColor);		// Already erased, use transparent.
+	screen->setFont(ourFont);					// Load our font.
+	screen->setTextSize(1);						// Does it need this? I don't know.
+	xLoc = x + fontXOffset;						// Offsets for funky font tweaks.
+	yLoc = y + fontYOffset;						//
+	screen->setCursor(xLoc,yLoc);				// Point to this location.. 
+	screen->drawText(buff);						// And draw!
+	screen->setFont(NULL);						// Unload the fons data.
 }
-*/
+
+

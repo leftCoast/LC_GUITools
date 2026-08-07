@@ -47,4 +47,26 @@ class fontLabel : public label {
 };
 
 
+
+// ******************************  erasableText   ******************************
+//
+// Good for doing stuff that changes. Doesn't overwrite itself. Only for solid
+// color backgrounds though.
+//
+// *****************************************************************************
+
+
+class erasableText :	public fontLabel {
+
+	public:
+				erasableText(void);
+				erasableText(rect* inRect);
+				erasableText(int inX, int inY, int inW,int inH);
+	virtual	~erasableText(void);
+	
+	virtual	void	drawSelf(void);	// Fixing up fontLabel..
+};
+
+
+
 #endif

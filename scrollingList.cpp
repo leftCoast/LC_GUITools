@@ -9,6 +9,14 @@ scrollingList::scrollingList(int x, int y, int width,int height, scrollType sTyp
 }
 
 
+scrollingList::scrollingList(rect* inRect,scrollType sType,eventSet inEventSet,bool vertical)
+	: drawList(inRect,inEventSet,vertical) {
+
+	mType = sType;                // The kind of scroller we are.
+	mLoc = onList;
+}
+
+
 // Looks like we don't have anything to toss out. 
 scrollingList::~scrollingList(void) { }
 

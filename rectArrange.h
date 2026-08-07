@@ -66,5 +66,25 @@ class rectListObj :	public linkListObj {
 };
 
 
+
+// *****************************************************
+//                      iconArrange 
+// *****************************************************
+
+// A useful example of an extended rectArrange. It controls the placement of a list of
+// icons across an area.
+
+
+class iconArrange : public rectArrange {
+
+	public:
+				iconArrange(void);
+	virtual	~iconArrange(void);
+	
+	virtual	void	arrangeList(void);
+};
+
+
+
 #endif
 		
