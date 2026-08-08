@@ -102,7 +102,6 @@ void erasableText::drawSelf(void) {
 	int	xLoc;
 	int	yLoc;
 	
-	//aRect.width = aRect.width+8;			// Why?
 	screen->fillRect(&aRect,&backColor);	// Erase the value.
 	//screen->drawRect(&aRect,&green);		// GREEN for debugging.
 	screen->setTextWrap(false);				// Wrap is not a good plan ever.
