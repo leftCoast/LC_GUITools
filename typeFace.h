@@ -21,7 +21,7 @@ class typeFace	: public linkListObj {
 					int				ourID;
 					colorObj			foreColor;
 					colorObj			backColor;
-					bool				transperant;
+					bool				transperent;
 					int				precision;		// How many after the decimal point.
 					int				justify;
 					bool				useFonts;

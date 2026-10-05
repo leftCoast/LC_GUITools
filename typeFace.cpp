@@ -1,5 +1,5 @@
 #include <typeFace.h>
-
+#include <debug.h>
 
 
 // Can't find the one you want? Use the one you're with. IE. This one.
@@ -24,7 +24,7 @@ typeFace::typeFace(int inID)
 	ourID = inID;
 	foreColor.setColor(&black);
 	backColor.setColor(&white);
-	transperant	= false;
+	transperent	= false;
 	precision	= 2;
 	justify		= TEXT_LEFT;
 	useFonts		= false;
@@ -50,7 +50,7 @@ void typeFace::saveFont(const GFXfont* font,int inHeight,int xOffset,int yOffset
 
 void typeFace::setTypeFace(label* inLabel) {
 
-	if (transperant) {
+	if (transperent) {
 		inLabel->setColors(&foreColor);
 	} else {
 		inLabel->setColors(&foreColor,&backColor);
@@ -72,7 +72,8 @@ void typeFace::setTypeFace(fontLabel* inLabel) {
 
 
 void typeFace::setTypeFace(erasableText* inLabel) { 
-
+	
+	transperent = false;						// erasableText needs this true. For erasing, silly.
 	setTypeFace((fontLabel*)inLabel);	// Do the fontLabel stuff..
 }													
 
@@ -80,7 +81,7 @@ void typeFace::setTypeFace(erasableText* inLabel) {
 
 void typeFace::setTypeFace(editLabel* inLabel) { 
 
-	setTypeFace((label*)inLabel);	// Do the labels stuff..
+	setTypeFace((label*)inLabel);	// Today editLabel is ony a label. So just do the label stuff.
 }													
 
 
