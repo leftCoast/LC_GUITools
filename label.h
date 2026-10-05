@@ -1,8 +1,8 @@
 #ifndef label_h
 #define label_h
 
-#include "drawObj.h"
-#include "colorObj.h"
+#include <drawObj.h>
+#include <colorObj.h>
 
 #define DEF_TEXT_SIZE	1	// If not set, what size do we want?
 #define CHAR_WIDTH		6	// Actual size is 6 * text size.

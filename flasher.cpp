@@ -1,4 +1,4 @@
-#include "flasher.h"
+#include <flasher.h>
 
 #define	DEF_FLASH_PERIOD	1000
 #define	DEF_FLASH_PULSE	500

@@ -1,7 +1,7 @@
 #ifndef fontLabel_h
 #define fontLabel_h
 
-#include "label.h"
+#include <label.h>
 #include <Fonts/FreeSansOblique24pt7b.h>
 #include <Fonts/FreeSansBoldOblique24pt7b.h>
 #include <Fonts/FreeSansBoldOblique12pt7b.h>
@@ -39,6 +39,7 @@ class fontLabel : public label {
 				void	setFont(const GFXfont* font,int yOffset);
 				void	setFont(const GFXfont* font,int inHeight,int yOffset);
 				void	setFont(const GFXfont* font,int inHeight,int xOffset,int yOffset);
+				int	doJustify(int xLoc);
 	virtual	void  drawSelf(void);
 	
 				const GFXfont*	ourFont;		// Our font.
