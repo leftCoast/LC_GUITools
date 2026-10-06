@@ -57,7 +57,8 @@ void fontLabel::setFont(const GFXfont* font,int inHeight,int xOffset,int yOffset
 }
 
 
-// This has to be last after all the parmeters for drawing text are set up. Bascally just 
+// This has to be last after all the parmeters for drawing text are set up. Bascally just
+// before calling setCursor(). 
 int fontLabel::doJustify(int xLoc) {
 
 	int	offset;

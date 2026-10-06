@@ -4,6 +4,7 @@
 #include <label.h>
 #include <Fonts/FreeSansOblique24pt7b.h>
 #include <Fonts/FreeSansBoldOblique24pt7b.h>
+#include <Fonts/FreeSansBoldOblique18pt7b.h>
 #include <Fonts/FreeSansBoldOblique12pt7b.h>
 #include <Fonts/FreeSansBoldOblique9pt7b.h>
 #include <Fonts/FreeMono12pt7b.h>
@@ -21,9 +22,10 @@
 
 // For the Teensy type display
 #define AFF_SANS_BOLD_24_OB	&FreeSansBoldOblique24pt7b,45,6,4	// Unchecked
+#define AFF_SANS_BOLD_18_OB	&FreeSansBoldOblique18pt7b,31,-4,2	// Good!
 #define AFF_SANS_BOLD_12_OB	&FreeSansBoldOblique12pt7b,24,-1,4	// Good!
 #define AFF_SANS_BOLD_9_OB		&FreeSansBoldOblique9pt7b,17,-1,1	// Good!
-#define AFF_SANS_9_OB			&FreeSansOblique9pt7b,18,0,2			// Seems ok.
+#define AFF_SANS_9_OB			&FreeSansOblique9pt7b,17,-2,1			// Seems ok.
 #define AFF_MONO_12				&FreeMono12pt7b,20,0,2					// Good!
 #define AFF_MONO_9				&FreeMono9pt7b,15,-1,2
 
