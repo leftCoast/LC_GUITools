@@ -50,5 +50,4 @@ class typeFacePallette	: public linkList {
 				
 extern typeFacePallette ourTxtPallette;
 
-	
 #endif
