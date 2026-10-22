@@ -44,6 +44,7 @@ class rect {
   	virtual	void  setRect(rect* inRect);                 					// Got a rect? Make this one the same.
   	virtual	void  setRect(point* inPt1,point* inPt2);							// Or two points..
   	virtual	void	setRect(int inX, int inY, int inWidth,int inHeight);	// Or the usual way..
+  	virtual	void	moveRect(int dX,int dY);										// Just nudge it over a bit..
   	virtual	void	insetRect(int inset);											// Inset all sides by this much. Or expand if negative.
    virtual	void	addRect(rect* inRect);											// Become the rect that spans ourself and this incoming rect.
           	int  	maxX(void);                            					// Where's our last pixel?

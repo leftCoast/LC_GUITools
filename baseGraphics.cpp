@@ -150,6 +150,24 @@ void rect::setRect(int inX, int inY, int inWidth,int inHeight) {
    setSize(inWidth,inHeight);
 }
 
+
+// Add these offsets to your location.
+void rect::moveRect(int dX,int dY) {
+	
+	x = x + dX;
+	y = y + dY;
+}
+	
+		
+void rect::insetRect(int inset) {
+
+	x = x + inset;
+	y = y + inset;
+	width = width - (2*inset);
+	height = height - (2*inset);
+}
+          	
+ 
 // Become the enclosing rect of yourself and this rect.
 void  rect::addRect(rect* inRect) {
 
@@ -170,20 +188,9 @@ void  rect::addRect(rect* inRect) {
 		}
 	}
 	setRect(&result);
-}
-	
-	
-	
-	
-void rect::insetRect(int inset) {
+} 
 
-	x = x + inset;
-	y = y + inset;
-	width = width - (2*inset);
-	height = height - (2*inset);
-}
-          	
-          	
+        	
 int rect::maxX(void) { return(x + width); }
 int rect::maxY(void)  { return(y + height); }
 int rect::minX(void) { return(x); }
