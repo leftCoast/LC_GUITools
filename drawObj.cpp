@@ -1,5 +1,7 @@
 #include <drawObj.h>
 //#include <debug.h>
+
+
 // ***********************************
 
 drawObj::drawObj() {
@@ -288,7 +290,7 @@ viewMgr::~viewMgr(void) { listHeader.dumpList(); }
 
 // New objects go on top.
 void viewMgr::addObj(drawObj* newObj) {
-    
+   
 	if (newObj) {								// Sanity! We're not adding NULL objects today!
 		newObj->linkAfter(&listHeader);	// Put the new guy at the top of the list.
 		hookup();								// hookup on the first addition. Ignored otherwise.
