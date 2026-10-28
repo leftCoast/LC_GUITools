@@ -24,7 +24,7 @@ typeFace::typeFace(int inID)
 	ourID = inID;
 	foreColor.setColor(&black);
 	backColor.setColor(&white);
-	transperent	= false;
+	transparent	= false;
 	precision	= 2;
 	justify		= TEXT_LEFT;
 	useFonts		= false;
@@ -50,7 +50,7 @@ void typeFace::saveFont(const GFXfont* font,int inHeight,int xOffset,int yOffset
 
 void typeFace::setTypeFace(label* inLabel) {
 
-	if (transperent) {
+	if (transparent) {
 		inLabel->setColors(&foreColor);
 	} else {
 		inLabel->setColors(&foreColor,&backColor);
@@ -73,7 +73,7 @@ void typeFace::setTypeFace(fontLabel* inLabel) {
 
 void typeFace::setTypeFace(erasableText* inLabel) { 
 	
-	transperent = false;						// erasableText needs this true. For erasing, silly.
+	transparent = false;						// erasableText can't be transparent. For erasing, silly.
 	setTypeFace((fontLabel*)inLabel);	// Do the fontLabel stuff..
 }													
 

@@ -1,6 +1,6 @@
 #include <label.h>
 #include <resizeBuff.h>
-
+//#include <debug.h>
 
 char  temp[TEMP_BUFF_SIZE];
 
@@ -161,10 +161,10 @@ void label::setValue(unsigned long val) {
 
 
 void label::setValue(double val) {
-   
-  dtostrf(val,0,prec,temp);
-  setValue(temp);
-  needRefresh = true;
+	
+	dtostrf(val,0,prec,temp);
+	setValue(temp);
+	needRefresh = true;
 }
 
 
