@@ -23,6 +23,7 @@ float		calcAngle(float deltaX,float deltaY);	// Degrees. Straight Trigonometry. 
 float		angle(point ptA, point ptB);				// Degrees. Works for displays. Use this.
 point		rotate(point ptA,float angle);			// Rotate around the x.y axis. From current x,y location, angle (radians).
 
+
 // ***************************************************************
 // Base class for a rectangle. 
 // ***************************************************************

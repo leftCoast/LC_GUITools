@@ -6,6 +6,7 @@
 fontLabel::fontLabel(void)
 	: label() {
 
+	ourFont		= NULL;
 	fontXOffset	= 0;
 	fontYOffset	= 0;
 }
@@ -86,21 +87,23 @@ void fontLabel::drawSelf(void) {
 	int	xLoc;
 	int	yLoc;
 	
-	//screen->drawRect(this,&cyan);							// CYAN for debugging.
-	screen->setTextWrap(false);								// we don't use text wrap for anything.
-	if (transp) {													// If transparent?						
-		screen->setTextColor(&textColor);					// Just print the text, others deal with background.
-	} else {															// Else..
-		screen->setTextColor(&textColor,&backColor);		// We'll do the solid color background.
-	}																	//
-	screen->setFont(ourFont);									// Set the font we want to use.
-	screen->setTextSize(1);										// Always this for fancy fonts.
-	xLoc = x + fontXOffset;										// Offsets for lining it up to where we say it goes.
-	yLoc = y + fontYOffset;										// Vertical as well. Now we're pointing at the top left corner..
-	xLoc = doJustify(xLoc);										// Do the justify thing.
-	screen->setCursor(xLoc,yLoc);								// Start writing here..
-	screen->drawText(buff);										// These chars..
-	screen->setFont(NULL);										// Recycle the font RAM.
+	if (ourFont) {													// If we actually have a font..
+		//screen->drawRect(this,&cyan);							// CYAN for debugging.
+		screen->setTextWrap(false);								// we don't use text wrap for anything.
+		if (transp) {													// If transparent?						
+			screen->setTextColor(&textColor);					// Just print the text, others deal with background.
+		} else {															// Else..
+			screen->setTextColor(&textColor,&backColor);		// We'll do the solid color background.
+		}																	//
+		screen->setFont(ourFont);									// Set the font we want to use.
+		screen->setTextSize(1);										// Always this for fancy fonts.
+		xLoc = x + fontXOffset;										// Offsets for lining it up to where we say it goes.
+		yLoc = y + fontYOffset;										// Vertical as well. Now we're pointing at the top left corner..
+		xLoc = doJustify(xLoc);										// Do the justify thing.
+		screen->setCursor(xLoc,yLoc);								// Start writing here..
+		screen->drawText(buff);										// These chars..
+		screen->setFont(NULL);										// Recycle the font RAM.
+	}
 }
 	
 
@@ -128,19 +131,21 @@ void erasableText::drawSelf(void) {
 	int	xLoc;
 	int	yLoc;
 	
-	aRect.insetRect(-2);							// Some values, like '3' overlap a little.
-	screen->fillRect(&aRect,&backColor);	// Erase the value.
-	//screen->drawRect(&aRect,&green);		// GREEN for debugging.
-	screen->setTextWrap(false);				// Wrap is not a good plan ever.
-	screen->setTextColor(&textColor);		// Already erased, use transparent.
-	screen->setFont(ourFont);					// Load our font.
-	screen->setTextSize(1);						// Does it need this? I don't know.
-	xLoc = x + fontXOffset;						// Offsets for funky font tweaks.
-	yLoc = y + fontYOffset;						//
-	xLoc = doJustify(xLoc);						// Do the justify thing.
-	screen->setCursor(xLoc,yLoc);				// Point to this location.. 
-	screen->drawText(buff);						// And draw!
-	screen->setFont(NULL);						// Unload the fons data.
+	if (ourFont) {									// If we HAVE a font. It can happen..
+		aRect.insetRect(-2);							// Some values, like '3' overlap a little.
+		screen->fillRect(&aRect,&backColor);	// Erase the value.
+		//screen->drawRect(&aRect,&green);		// GREEN for debugging.
+		screen->setTextWrap(false);				// Wrap is not a good plan ever.
+		screen->setTextColor(&textColor);		// Already erased, use transparent.
+		screen->setFont(ourFont);					// Load our font.
+		screen->setTextSize(1);						// Does it need this? I don't know.
+		xLoc = x + fontXOffset;						// Offsets for funky font tweaks.
+		yLoc = y + fontYOffset;						//
+		xLoc = doJustify(xLoc);						// Do the justify thing.
+		screen->setCursor(xLoc,yLoc);				// Point to this location.. 
+		screen->drawText(buff);						// And draw!
+		screen->setFont(NULL);						// Unload the fons data.
+	}
 }
 
 

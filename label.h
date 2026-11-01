@@ -25,13 +25,9 @@ enum {
 class label : public drawObj {
 
 	public :
-  				label(void);
-  				label(const char* inText);
-  				label(const char* inText, int inSize);
-  				label(int inLocX, int inLocY, int inWidth,int inHeight);
-  				label(int inLocX, int inLocY, int inWidth,int inHeight,const char* inText);
-  				label(int inLocX, int inLocY, int inWidth,int inHeight,const char* inText,int textSize);
-  				label(rect* inRect,const char* inText,int textSize=1);
+  				label(const char* inText="", int inSize=1);
+  				label(int inLocX, int inLocY, int inWidth,int inHeight,const char* inText="",int textSize=1);
+  				label(rect* inRect,const char* inText="",int textSize=1);
   				label(label* aLabel);
 	virtual	~label(void);
   

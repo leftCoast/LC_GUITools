@@ -40,7 +40,7 @@ class typeFacePallette	: public linkList {
 				~typeFacePallette(void);
 					 
 	virtual	void			addTypeFace(typeFace* newtypeFace);
-	virtual	typeFace*	typeFacePallette::findID(int inID);				 
+	virtual	typeFace*	findID(int inID);				 
 	virtual	void			setTypeFace(label* inLabel,int choice);
 	virtual	void			setTypeFace(fontLabel* inLabel,int choice);
 	virtual	void			setTypeFace(erasableText* inLabel,int choice);

@@ -13,7 +13,7 @@ class lineObj : public drawObj {
 	virtual	~lineObj(void);
 	
 				void	setColor(colorObj* inColor);
-				void	setSize(byte inSize);                      // line width. Sadly, un-suported.
+				void	setWidth(byte inWidth);                      // line width. Sadly, un-suported.
 				void	setEnds(int x1,int y1,int x2,int y2);
 				void	setEnds(point* startPt,point* endPt);
 				void	setEnds(rect* inRect,slopeType inSlope);
@@ -21,7 +21,7 @@ class lineObj : public drawObj {
   
   				colorObj	color;
   				byte		slope;    // We already have a rectangle. This notes which diagonal.
-  				byte		lnSize;
+  				byte		lnWidth;
 };
 
 #endif

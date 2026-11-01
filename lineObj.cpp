@@ -4,7 +4,7 @@
 lineObj::lineObj(void) { 
 
     color.setColor(&black);
-    lnSize = 1;
+    lnWidth = 1;
     slope = positiveSlope;
 }
 
@@ -26,9 +26,9 @@ void lineObj::setColor(colorObj* inColor) {
 }
 
 
-void lineObj::setSize(byte inSize) {
+void lineObj::setWidth(byte inWidth) {
 
-  lnSize = inSize;
+  lnWidth = inWidth;
   needRefresh = true;
 }
 

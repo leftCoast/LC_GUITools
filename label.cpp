@@ -1,34 +1,8 @@
 #include <label.h>
 #include <resizeBuff.h>
-//#include <debug.h>
+#include <debug.h>
 
 char  temp[TEMP_BUFF_SIZE];
-
-/*
-// Real computers don't have dtostrf(). But this stuff is for Arduino, hence..
-#ifdef dtostrf
-#undef dtostrf
-#endif
-//#ifndef dtostrf
-
-void dtostrf(float val,int min,int prec,char* buff) {
-	sprintf(buff,"%f",prec,val);
-}
-
-//#endif
-*/
-
-label::label() : drawObj() { initLabel(); }
-
-
-// These next two actually fit our rectangle to the text.
-label::label(const char* inText)
-	: drawObj() {
-
-	initLabel();
-	setValue(inText);
-	setSize(getTextWidth(),getTextHeight());
-}
 
 
 label::label(const char* inText, int inSize) 
@@ -38,18 +12,6 @@ label::label(const char* inText, int inSize)
 	setValue(inText);
 	setTextSize(inSize);
 	setSize(getTextWidth(),getTextHeight());
-}
-
-
-label::label(int inLocX, int inLocY, int inWidth,int inHeight)
-	: drawObj(inLocX,inLocY,inWidth,inHeight) { initLabel(); }
-
-
-label::label(int inLocX, int inLocY, int inWidth,int inHeight,const char* inText)
-	: drawObj(inLocX,inLocY,inWidth,inHeight) {
-	
-	initLabel();
-	setValue(inText);
 }
 
 
@@ -145,7 +107,7 @@ void label::setPrecision(int inPrec) {
 
 
 void label::setValue(int val) {
-  
+ 
   snprintf (temp,TEMP_BUFF_SIZE,"%d",val);
   setValue(temp);
   needRefresh = true;
@@ -169,7 +131,7 @@ void label::setValue(double val) {
 
 
 void label::setValue(float val) {
-  
+ 
   double dVal = val;
   setValue(dVal); 
 }
@@ -204,7 +166,7 @@ int label::getNumChars(void) {
 
 
 // We want to know how many chars can we display?
-int label::getViewChars(void) { return width/(CHAR_WIDTH*textSize); }
+int label::getViewChars(void) {  return width/(CHAR_WIDTH*textSize); }
 
 	
 // We asked above how much you have. Hand it over!	(They better add one for the \0!)	

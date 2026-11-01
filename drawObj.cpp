@@ -1,5 +1,5 @@
 #include <drawObj.h>
-//#include <debug.h>
+#include <debug.h>
 
 
 // ***********************************
@@ -334,7 +334,7 @@ bool viewMgr::checkEvents(event* theEvent) {
 
 // Checking for redraws. And doing them.
 void viewMgr::checkRefresh(void) {
-    
+   
 	drawObj*	trace;
 	
 	trace = (drawObj*)listHeader.getLast();	// make sure we're at the bottom.
