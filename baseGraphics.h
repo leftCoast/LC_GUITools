@@ -15,13 +15,13 @@
     int y;
   }; 
   
-//void	printPoint(point* inPt,char* name="Point : ");
-int		xDistance(point ptA, point ptB);
-int		yDistance(point ptA, point ptB);
-float		distance(point ptA, point ptB);			// Measure the distance between two points.
-float		calcAngle(float deltaX,float deltaY);	// Degrees. Straight Trigonometry. Don't call this.
-float		angle(point ptA, point ptB);				// Degrees. Works for displays. Use this.
-point		rotate(point ptA,float angle);			// Rotate around the x.y axis. From current x,y location, angle (radians).
+void	printPoint(point* inPt,const char* name="Point : ");
+int	xDistance(point ptA, point ptB);
+int	yDistance(point ptA, point ptB);
+float	distance(point ptA, point ptB);			// Measure the distance between two points.
+float	calcAngle(float deltaX,float deltaY);	// Degrees. Straight Trigonometry. Don't call this.
+float	angle(point ptA, point ptB);				// Degrees. Works for displays. Use this.
+void	rotate(point* aPt,float deg);				// Degrees. Rotate around the x.y axis. From current x,y location.
 
 
 // ***************************************************************
@@ -55,6 +55,7 @@ class rect {
   			  	bool 	inRect(int inX, int inY);              					// Is this point in us?
   			  	bool 	inRect(point* inPoint);											// Is this point in us?
   			  	point	getCorner(rectPt corner);										// Pass back the corner point.
+				point	getCenter(void);													// Pass back the closest point to our center.
 				bool	overlap(rect* checkRect);										// Is that rect touching us?
 				bool	isSubRectOf(rect* checkRect);									// Are we contained in that rect?
 				bool	isSameAs(rect* checkRect);										// Are we identical to this rect?

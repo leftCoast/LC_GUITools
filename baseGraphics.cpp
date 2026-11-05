@@ -1,15 +1,15 @@
 #include <baseGraphics.h>
 #include <math.h>
-
-
+#include <debug.h>
+#include <twoDMath.h>
 
 #define DEF_LOC_X  16    // Just anything so the user can see something.
 #define DEF_LOC_Y  16
 #define DEF_SIZE_X 16
 #define DEF_SIZE_Y 16
 
-/*
-void printPoint(point* inPt,char* name) {
+
+void printPoint(point* inPt,const char* name) {
 
 	Serial.print(name);
    Serial.print("\t: ");
@@ -17,7 +17,7 @@ void printPoint(point* inPt,char* name) {
    Serial.print(F(", "));
    Serial.println(inPt->y);
 }
-*/
+
 
 // Basically "How wide is this?".
 int	xDistance(point ptA,point ptB) { return ptB.x - ptA.x; }
@@ -43,7 +43,7 @@ float distance(point ptA,point ptB) {
 }
 
 
-// This does the straight trig. calcualtion.
+// This does the straight trig. calcualtion. Returns degrees, NOT radians.
 float calcAngle(float deltaX,float deltaY) {
 
    float rad;
@@ -71,6 +71,8 @@ float calcAngle(float deltaX,float deltaY) {
 	
 // Gives angle in degrees from 3 O'clock counter clockwise. (Like trig stuff.) The
 // backwards y values must be dealt with here.
+//
+// This is used mostly for finding out what direction the mouse is moving on a drag.
 float angle(point ptA,point ptB) {
 	
 	float deltaX;
@@ -78,21 +80,24 @@ float angle(point ptA,point ptB) {
 	
 	deltaX = xDistance(ptA,ptB);		// Do the X thing.
 	deltaY = -yDistance(ptA,ptB);		// Do the Y thing, but reverese it.
-	return calcAngle(deltaX,deltaY);	// Pass in the calcualted deltas.
+	return calcAngle(deltaX,deltaY);	// Pass in the calcualted deltas, return degrees.
 }
 
 
-// Rotate around the x.y axis. From current x,y location, angle (radians).
-// BUT this is only using ints so the accuracy is somewhat lacking.
-point	rotate(point ptA,float angle) {
-
-	point	res;
-	float	mag;
+// Rotate around the x.y axis. From current x,y location, degrees.
+void rotate(point* aPt,float deg) {  
+  
+	twoDPt	ourPt;
+	double	mag;
+	double	rad;
 	
-	mag = sqrt((ptA.x * ptA.x) + (ptA.y * ptA.y));
-	res.x = round(mag * cos(acos(ptA.x/mag)+angle));
-	res.y = round(mag * sin(asin(ptA.y/mag)+angle));
-	return res;
+	ourPt.setPtRec(aPt->x,aPt->y);
+	mag = ourPt.getMag();
+	rad = ourPt.getRad();
+	rad = rad + degToRad(deg);
+	ourPt.setPtPolar(mag,rad);
+	aPt->x = round(ourPt.getX());
+	aPt->y = round(ourPt.getY());
 }
 
 
@@ -270,6 +275,17 @@ point rect::getCorner(rectPt corner) {
 }
 
 
+// Pass back the closest point to our center.
+point rect::getCenter(void) {
+
+	point	center;
+	
+	center.x = x + round(width/2.0);		// Our x location + half of our width.
+	center.y = y + round(height/2.0);	// Our y location + half of our height.
+	return center;								// There 'ya go.
+}
+
+													
 // Are we touching this passed in rectangle? We do this by looking at every way we can say
 // it's not true;
 bool rect::overlap(rect* checkRect) {
