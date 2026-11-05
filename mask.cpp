@@ -1,4 +1,6 @@
 #include <mask.h>
+#include <debug.h>
+
 
 mask* gMask = NULL;
 
@@ -56,7 +58,7 @@ masktype	maskRect::checkRect(rect* inRect) {
 
 
 masktype	maskRect::checkRect(int x,int y,int w,int h) {
-
+ST
 	rect	inRect;
 	
 	inRect.setRect(x,y,w,h);

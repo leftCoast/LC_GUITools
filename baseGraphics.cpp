@@ -181,8 +181,15 @@ void rect::moveRect(int dX,int dY) {
 	x = x + dX;		// Bump x.
 	y = y + dY;		// Bump y.
 }
-	
 
+// Center on this location..	
+void rect::centerRect(point* centerPt) {
+
+	x = centerPt->x - width/2;
+	y = centerPt->y - height/2;
+}
+
+									
 // Make us bigger or smaller by "this much" around our center point. Positive values make
 // us smaller, Negative value make us bigger. Why is this? Because this started as a way
 // to make rects smaller. and I couldn't find a word I liked that was the opposite of
