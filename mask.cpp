@@ -36,7 +36,7 @@ maskRect::maskRect(int inX, int inY, int inWidth,int inHeight)
 	
 maskRect::~maskRect(void) { }
 
-
+/*
 masktype	maskRect::checkRect(rect* inRect) {
 		
 	if (inRect->isSubRectOf(this)) {
@@ -58,7 +58,7 @@ masktype	maskRect::checkRect(rect* inRect) {
 
 
 masktype	maskRect::checkRect(int x,int y,int w,int h) {
-ST
+
 	rect	inRect;
 	
 	inRect.setRect(x,y,w,h);
@@ -67,9 +67,47 @@ ST
 
 
 bool maskRect::checkPixel(int x,int y) {
-
+	
+	bool	answer;
+	Serial.print("MASK : ");
+	Serial.print(this->x);
+	Serial.print(",");
+	Serial.print(this->y);
+	Serial.print("\tpt x,y : ");
+	Serial.print(x);
+	Serial.print(",");
+	Serial.println(y);
 	if (inverse) 
-		return !inRect(x,y);
+		answer = !inRect(x,y);
 	else
-		return inRect(x,y);
+		answer = inRect(x,y);
+	Serial.println(answer);
+	return answer;
+}
+*/
+
+bool maskRect::checkPixel(int x,int y) {
+
+	if (inverse) {
+		
+		/*
+		if (this->inRect(x,y)) {
+			Serial.print("pt x,y : ");
+			Serial.print(x);
+			Serial.print(",");
+			Serial.print(y);
+			Serial.print(" is in ");
+			Serial.print(this->x);
+			Serial.print(" .. ");
+			Serial.print(this->x + this->width);
+			Serial.print(",");
+			Serial.print(this->y);
+			Serial.print(" .. ");
+			Serial.println(this->y + this->height);
+		}
+		*/
+		return this->inRect(x,y);
+	} else {
+		return !this->inRect(x,y);
+	}
 }

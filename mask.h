@@ -43,8 +43,8 @@ class maskRect :	public mask,
 				maskRect(int inX, int inY, int inWidth,int inHeight);
 	virtual	~maskRect(void);
 				
-	virtual	masktype	checkRect(rect* inRect);	
-	virtual	masktype	checkRect(int x,int y,int w,int h);
+	//virtual	masktype	checkRect(rect* inRect);	
+	//virtual	masktype	checkRect(int x,int y,int w,int h);
 	virtual	bool		checkPixel(int x,int y);
 	
 				
